@@ -21,10 +21,6 @@ const FormContainer = styled.div`
     justify-content: center;
     align-items: center;
 `;
-const Form = styled.form`
-    justify-content: center;
-    //padding-bottom: 30;
-`
 
 const Button = styled.button<ButtonProps>`
     background: ${({$primary}) => ($primary ? '#A7DBF5' : 'none')};

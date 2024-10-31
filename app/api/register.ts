@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const response = await axios.post('https://localhost:3000/signup', { prenom, nom, genre, dateNaiss, email, password });
             res.status(200).json(response);
         } catch (error) {
-            res.status(400).json({message: 'Echec de l\'inscription.'});
+            res.status(400).json({message: 'Echec de l\'inscription.', error});
         }
     } else {
         res.setHeader('Allow', ['POST']);

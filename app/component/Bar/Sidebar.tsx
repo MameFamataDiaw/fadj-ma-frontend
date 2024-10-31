@@ -1,11 +1,9 @@
 'use client'
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import { FaThLarge, FaPills, FaSignOutAlt } from "react-icons/fa";
 import { useRouter, usePathname } from "next/navigation";
 import Image from 'next/image';
-import {router} from "next/client";
-// import {router} from "next/client";
 
 interface MenuItem{
     path: string;
@@ -28,15 +26,17 @@ interface MenuItem{
 
 const SidebarContainer = styled.aside`
   width: 256px;
-  height: 100vh;
+  height: 85vh;
   background-color: #283342;
   color: white;
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
-  position: fixed;
+    //margin-top: 40px;
+  padding-top: 30px;
+  //position: fixed;
   left: 0;
   top: 0;
+    bottom: 0;
 `;
 
 const ProfileContainer = styled.div`
@@ -153,12 +153,12 @@ const LogoutButton = styled.button`
 // Menu items configuration
 const menuItems: MenuItem[] = [
     {
-        path: '/dashboard',
+        path: '/',
         icon: <FaThLarge />,
         label: 'Tableau de bord'
     },
     {
-        path: '/medicaments',
+        path: '/medicament',
         icon: <FaPills />,
         label: 'Médicaments'
     }
@@ -218,7 +218,7 @@ export default function Sidebar() {
         </SidebarContainer>
     );
 }
-const handleLogOut = () => {
-    document.cookie = 'token=; Max-Age=0; path=/;';//Supprime le token
-    router.push('/login');
-}
+// const handleLogOut = () => {
+//     document.cookie = 'token=; Max-Age=0; path=/;';//Supprime le token
+//     router.push('/login');
+// }

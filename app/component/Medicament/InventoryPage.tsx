@@ -1,14 +1,28 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import Link from "next/link";
 
+interface Groupe {
+    nomGroupe: string;
+    // autres propriétés...
+}
+
+interface Medicament {
+    _id: string;
+    nom: string;
+    idMedicament: string;
+    groupe?: Groupe;
+    stock: number;
+}
+
 const Container = styled.div`
-    padding: 20px;
-    width: 944px;
-    height: 610px;
-    position: absolute;
-    margin: auto;
+    padding: 10px 30px;
+    max-width: 97%;
+    margin: 0;
+    height: 99%;
     background: #EDF1F5;
 `
 const HeaderContainer = styled.div`
@@ -90,9 +104,10 @@ const FilterSelect = styled.select`
     height: 38px;
 `
 const Table = styled.table`
-    width: 900px;
+    width: 100%;
     height: 400px;
     position: relative;
+    justify-content: center;
     background: #FFFFFF;
     border: 1px solid #FFFFFF;
     border-radius: 4px;
@@ -140,60 +155,86 @@ const PaginationContainer = styled.div`
     margin-top: 20px;
 `
 
-const InventoryPage = () => {
-
+const InventoryPage: React.FC = () => {
+    const [medicaments, setMedicaments] = useState<Medicament[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [filteredMedicaments, setFilteredMedicaments] = useState<Medicament[]>([]);
+    const [groupFilter, setGroupFilter] = useState('');
+    const [totalCount, setTotalCount] = useState(0);
     const [selectedGroup, setSelectedGroup] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+    const router = useRouter();
 
-    // Exemple de données (vous pouvez les remplacer par des données dynamiques provenant d'une API)
-    const medications = [
-        { name: 'Augmentin 625 Duo Comprimé', id: 'D06ID232435454', group: 'Médecine générique', stock: 350 },
-        { name: 'Azithral-500 Comprimé', id: 'D06ID232435451', group: 'Médecine générique', stock: 20 },
-        { name: 'Azithral-500 Comprimé', id: 'D06ID232435451', group: 'Médecine générique', stock: 20 },
-        { name: 'Azithral-500 Comprimé', id: 'D06ID232435451', group: 'Médecine générique', stock: 20 },
-        { name: 'Azithral-500 Comprimé', id: 'D06ID232435451', group: 'Médecine générique', stock: 20 },
-        { name: 'Azithral-500 Comprimé', id: 'D06ID232435451', group: 'Médecine générique', stock: 20 },
-        { name: 'Azithral-500 Comprimé', id: 'D06ID232435451', group: 'Médecine générique', stock: 20 },
-        { name: 'Azithral-500 Comprimé', id: 'D06ID232435451', group: 'Médecine générique', stock: 20 },
+    useEffect(() => {
+        fetchMedicaments();
+    }, []);
 
-    ];
+    useEffect(() => {
+        handleSearchAndFilter();
+    }, [searchTerm, groupFilter, medicaments]);
 
-    const filteredMedications = medications.filter((medication) =>
-        medication.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (selectedGroup === '' || medication.group === selectedGroup)
-    );
+    const fetchMedicaments = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/api/medicaments');
+            setMedicaments(response.data);
+            setTotalCount(response.data.length);
+        } catch (error) {
+            console.error("Erreur lors du chargement des médicaments :", error);
+        }
+    };
 
-    const itemsPerPage = 8;
-    const totalPages = Math.ceil(filteredMedications.length / itemsPerPage);
+    const handleSearchAndFilter = () => {
+        const searchLower = searchTerm.toLowerCase();
+        const filtered = medicaments.filter(med => {
+            const matchSearch = med.nom.toLowerCase().includes(searchLower) || med.idMedicament.toLowerCase().includes(searchLower);
+            const matchGroup = groupFilter ? med.groupe?.nomGroupe === groupFilter : true;
+            return matchSearch && matchGroup;
+        });
+        setFilteredMedicaments(filtered);
+    };
 
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value);
-    const handleGroupChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedGroup(e.target.value);
+    const handleDetails = (id: string) => {
+        router.push(`/medicament/details/${id}`);
+    };
 
-    const displayedMedications = filteredMedications.slice(
+    // Pagination logic
+    const totalPages = Math.ceil(filteredMedicaments.length / itemsPerPage);
+    const displayedMedicaments = filteredMedicaments.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
+
+    const handlePreviousPage = () => {
+        setCurrentPage((prev) => Math.max(prev - 1, 1));
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+    };
 
     return(
         <Container>
             <HeaderContainer>
                 <HeaderText>
-                    <Header>médicaments {/*({filteredMedications.length})*/}</Header>
+                    <Header>médicaments ({totalCount})</Header>
                     <ListText>Liste des médicaments disponibles a la vente</ListText>
                 </HeaderText>
                 <NewMedicLink>
                     <a href="/medicament">Nouveau médicament</a>
                 </NewMedicLink>
             </HeaderContainer>
+
             <SearchContainer>
+                {/* Barre de recherche*/}
                 <SearchInput
                     type="text"
-                    placeholder="Rechercher dans l'inventaire des medicaments..."
+                    placeholder="Rechercher dans l'inventaire des médicaments..."
                     value={searchTerm}
-                    onChange={handleSearch}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <FilterSelect onChange={handleGroupChange}>
+                {/* Filtre de groupe */}
+                <FilterSelect value={groupFilter} onChange={(e) => setGroupFilter(e.target.value)}>
                     <option value="">Selectionnez un groupe</option>
                     <option value="Medecine generique">Médecine générique</option>
                     <option value="Antibiotiques">Antibiotiques</option>
@@ -201,14 +242,15 @@ const InventoryPage = () => {
                     <option value="Diabete">Diabete</option>
                     <option value="Maladies cardiovasculaires">Maladies cardiovasculaires</option>
                     <option value="Produits à base de plantes">Produits à base de plantes</option>
-                    <option value="Produits à base de plantes">Crèmes et pommandes cutanées</option>
-                    <option value="Produits à base de plantes">Gels et sprays anti-inflammatoires</option>
+                    <option value="Crèmes et pommades cutanées">Crèmes et pommades cutanées</option>
+                    <option value="Gels et sprays anti-inflammatoires">Gels et sprays anti-inflammatoires</option>
                 </FilterSelect>
             </SearchContainer>
+            {/* Tableau des médicaments */}
             <Table>
                 <thead>
-                    <tr>
-                        <TableHeader>Nom du médicament</TableHeader>
+                <tr>
+                    <TableHeader>Nom du médicament</TableHeader>
                         <TableHeader>ID du médicament</TableHeader>
                         <TableHeader>Nom de groupe</TableHeader>
                         <TableHeader>Stock en quantié</TableHeader>
@@ -216,33 +258,33 @@ const InventoryPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {filteredMedications.map((med, index) => (
-                    <TableRow key={index}>
-                        <TableCell>{med.name}</TableCell>
-                        <TableCell>{med.id}</TableCell>
-                        <TableCell>{med.group}</TableCell>
+                {filteredMedicaments.map((med)  => (
+                    <TableRow key={med._id}>
+                        <TableCell>{med.nom}</TableCell>
+                        <TableCell>{med._id}</TableCell>
+                        <TableCell>{med.groupe?.nomGroupe || 'Groupe non spécifié'}</TableCell>
                         <TableCell>{med.stock}</TableCell>
                         <TableCell>
-                            <Link href="/medicament/details" passHref>
-                                <ActionButton>
-                                    Voir tous les details »
-                                </ActionButton>
-                            </Link>
+                            {/*<Link href="/medicament/details" passHref>*/}
+                            {/*    <ActionButton>*/}
+                            {/*        Voir tous les details »*/}
+                            {/*    </ActionButton>*/}
+                            {/*</Link>*/}
+                            <button onClick={() => handleDetails(med._id)}>Voir tous les détails</button>
                         </TableCell>
                     </TableRow>
                 ))}
                 </tbody>
             </Table>
             <PaginationContainer>
-                <span>Affichage de {itemsPerPage * (currentPage - 1) + 1} à {Math.min(currentPage * itemsPerPage, filteredMedications.length)} résultats sur {filteredMedications.length}</span>
+                {/*<span>Affichage de {itemsPerPage * (currentPage - 1) + 1} à {Math.min(currentPage * itemsPerPage, filteredMedications.length)} résultats sur {filteredMedications.length}</span>*/}
                 <div>
-                    <button onClick={() => setCurrentPage(Math.max(1, currentPage - 1))} disabled={currentPage === 1}>
-                        ‹
+                    <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+                        ‹ Précédent
                     </button>
-                    Page 0{currentPage}
-                    <button onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                            disabled={currentPage === totalPages}>
-                        ›
+                    <span>Page {currentPage} sur {totalPages}</span>
+                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                        Suivant ›
                     </button>
                 </div>
             </PaginationContainer>

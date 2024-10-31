@@ -229,7 +229,7 @@ const RegisterForm: React.FC = () => {
                             <input
                                 type="radio"
                                 name="genre"
-                                value="Homme"
+                                value="homme"
                                 checked={formData.genre === 'Homme'}
                                 onChange={handleChange}
                             />
@@ -239,7 +239,7 @@ const RegisterForm: React.FC = () => {
                             <input
                                 type="radio"
                                 name="genre"
-                                value="Femme"
+                                value="femme"
                                 checked={formData.genre === 'Femme'}
                                 onChange={handleChange}
                             />

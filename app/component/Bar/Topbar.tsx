@@ -23,7 +23,7 @@ const TopbarContainer = styled.header`
   background-color: #f5f7fa;
   padding: 5px 20px;
   height: 50px;
-  width: 100%;
+  width: 98%;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 `;
 

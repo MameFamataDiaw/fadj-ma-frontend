@@ -10,50 +10,107 @@ import styled from "styled-components";
 const MetricCardGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
+  gap: 2rem;
+  margin-bottom:1rem;
 `;
 
 const MetricCard = styled.div<{ variant?: 'success' | 'warning' | 'info' | 'error' }>`
-  background-color: ${props => {
-    switch (props.variant) {
-        case 'success':
-            return '#E6F6F4';
-        case 'warning':
-            return '#FFF7E6';
-        case 'info':
-            return '#E6F0FF';
-        case 'error':
-            return '#FEE2E2';
-        default:
-            return 'white';
-    }
-}};
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  background: #FFFFFF;
+    border: ${props => {
+        switch (props.variant) {
+            case 'success':
+                return '1px solid #01A768';
+            case 'warning':
+                return '1px solid #FED600';
+            case 'info':
+                return '1px solid #03A9F5';
+            case 'error':
+                return '1px solid #F0483E';
+            default:
+                return 'none';
+        }
+    }};
+    box-shadow: ${props => (props.variant === 'success' ? '0px 3px 10px 2px rgba(29, 36, 46, 0.06)' : 'none')};
+    border-radius: 4px;
+    width: 190px;
+    height: 130px;
+    box-sizing: border-box;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   text-align: center;
 `;
 
+const CardItems = styled.div<{ variant?: 'success' | 'warning' | 'info' | 'error' }>`
+    border: ${props => {
+        switch (props.variant) {
+            case 'success':
+                return '1px solid #01A768';
+            case 'warning':
+                return '1px solid #FED600';
+            case 'info':
+                return '1px solid #03A9F5';
+            case 'error':
+                return '1px solid #F0483E';
+            default:
+                return 'none';
+        }
+    }};
+    box-sizing: border-box;
+    width: 212px;
+    height: 130px;
+    background: #FFFFFF;
+    border-radius: 4px 4px 0px 0px;
+`
+const CardAction = styled.a<{ variant?: 'success' | 'warning' | 'info' | 'error' }>`
+    background: ${props => {
+        switch (props.variant) {
+            case 'success':
+                return 'rgba(1, 167, 104, 0.3)';
+            case 'warning':
+                return 'rgba(254, 214, 0, 0.3)';
+            case 'info':
+                return 'rgba(3, 169, 245, 0.3)';
+            case 'error':
+                return 'rgba(240, 72, 62, 0.3)';
+            default:
+                return 'white';
+        }
+    }};
+`
 // const CardContainer = styled.div`
 //     display: flex;
 //     gap: 20px;
 //     margin-bottom: 20px;
 // `
 const MetricCardTitle = styled.h3`
-  font-size: 1.25rem;
-  font-weight: 500;
+
+    font-family: 'Poppins',sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height, or 110% */
+    text-align: center;
+
+    color: #1D242E;
 `;
 const MetricCardValue = styled.div`
-  font-size: 1.75rem;
-  font-weight: 600;
+    font-family: 'Poppins',sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    color: #1D242E;
 `;
 const MetricCardAction = styled.button`
   background-color: transparent;
   border: none;
   color: #4D7CFE;
-  font-size: 0.875rem;
+  font-size: 12px;
   font-weight: 500;
   cursor: pointer;
 `;
@@ -78,30 +135,51 @@ const DashboardMetricCard: React.FC = () => {
     return (
         <MetricCardGrid>
             <MetricCard variant="success">
-                <MetricCardTitle>Bien</MetricCardTitle>
-                <MetricCardValue>Statut de l'inventaire</MetricCardValue>
-                <MetricCardAction>Afficher le rapport détaillé</MetricCardAction>
+                    <MetricCardTitle>Bien</MetricCardTitle>
+                    <MetricCardValue>Statut inventaire</MetricCardValue>
+
+                    <CardAction>
+                        <MetricCardAction>Afficher le rapport détaillé</MetricCardAction>
+                    </CardAction>
             </MetricCard>
 
             <MetricCard variant="warning">
-                <MetricCardTitle>4,800,432 FCFA</MetricCardTitle>
-                <MetricCardValue>Revenu : janvier 2022</MetricCardValue>
-                <MetricCardAction>Afficher le rapport détaillé</MetricCardAction>
+
+                   <MetricCardTitle>4,800,432 FCFA</MetricCardTitle>
+                   <MetricCardValue>Revenu : janvier 2022</MetricCardValue>
+
+                    <CardAction>
+                        <MetricCardAction>Afficher le rapport détaillé</MetricCardAction>
+                    </CardAction>
+
             </MetricCard>
 
             <MetricCard variant="info">
-                <MetricCardTitle>298</MetricCardTitle>
-                <MetricCardValue>Médicaments disponibles</MetricCardValue>
-                <MetricCardAction>Visiter l'inventaire</MetricCardAction>
+
+                    <MetricCardTitle>298</MetricCardTitle>
+                    <MetricCardValue>Médicaments disponibles</MetricCardValue>
+
+
+                   <CardAction>
+                       <MetricCardAction>Visiter inventaire</MetricCardAction>
+                   </CardAction>
+
             </MetricCard>
 
             <MetricCard variant="error">
-                <MetricCardTitle>1</MetricCardTitle>
-                <MetricCardValue>Pénurie de médicaments</MetricCardValue>
-                <MetricCardAction>Résoudre maintenant</MetricCardAction>
+
+                    <MetricCardTitle>1</MetricCardTitle>
+                    <MetricCardValue>Pénurie de médicaments</MetricCardValue>
+
+                    <CardAction>
+                        <MetricCardAction>Resoudre maintenant</MetricCardAction>
+                    </CardAction>
+
             </MetricCard>
         </MetricCardGrid>
     );
-};
+};<CardAction>
+
+</CardAction>
 
 export default DashboardMetricCard;

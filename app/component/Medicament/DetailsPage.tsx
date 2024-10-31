@@ -124,7 +124,7 @@ const DetailsPage = () =>{
                     <SectionTitle>Type de consommation</SectionTitle>
                     <InfoText>Oral</InfoText>
 
-                    <SectionTitle>Date d'expiration</SectionTitle>
+                    <SectionTitle>Date expiration</SectionTitle>
                     <InfoText>25 Janvier</InfoText>
                 </InfoTexts>
             </MedicationInfo>

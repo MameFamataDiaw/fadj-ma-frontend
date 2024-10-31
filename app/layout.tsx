@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import StyledComponentsRegistry from "@/lib/registry";
 
 export const metadata: Metadata = {
