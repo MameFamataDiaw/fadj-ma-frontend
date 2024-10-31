@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from '@/app/component/Bar/Sidebar'
-import InventoryPage from '../component/Medicament/InventoryPage';
 import Topbar from "@/app/component/Bar/Topbar";
+import InventoryPage from "@/app/component/Medicament/InventoryPage";
 
 const ListPage = () => {
     return (

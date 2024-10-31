@@ -2,7 +2,7 @@ import React from 'react';
 import Topbar from '@/app/component/Bar/Topbar'
 import DetailsPage from '../../../component/Medicament/DetailsPage'
 
-const Page = () => {
+const Details = () => {
     return (
         <div>
             <Topbar />
@@ -11,4 +11,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default Details;

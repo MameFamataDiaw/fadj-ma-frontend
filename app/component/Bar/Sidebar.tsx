@@ -158,7 +158,7 @@ const menuItems: MenuItem[] = [
         label: 'Tableau de bord'
     },
     {
-        path: '/medicament',
+        path: '/medicament/list',
         icon: <FaPills />,
         label: 'Médicaments'
     }

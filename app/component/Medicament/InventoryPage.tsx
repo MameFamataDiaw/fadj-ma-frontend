@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
-import Link from "next/link";
 
 interface Groupe {
     nomGroupe: string;
@@ -195,7 +194,7 @@ const InventoryPage: React.FC = () => {
     };
 
     const handleDetails = (id: string) => {
-        router.push(`/medicament/details/${id}`);
+        router.push(`/medicament/details/view/${id}`);
     };
 
     // Pagination logic

@@ -1,10 +1,8 @@
 'use client';
-
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import axios from "axios";
 import {useRouter} from "next/navigation";
 import styled from "styled-components";
-import {router} from "next/client";
-import axios from "axios";
 
 interface DetailedMedicamentInfo {
     composition?: string;
@@ -124,31 +122,24 @@ const Subtitle = styled.p`
     margin-top: 1px;
     margin-bottom: 10px;
 `;
-const PromptContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-`;
-
-const PromptMessage = styled.div`
-    text-align: center;
-    padding: 20px;
-
-    h3 {
-        margin-bottom: 10px;
-        color: #1D242E;
-    }
-
-    p {
-        color: #808489;
-        margin-bottom: 20px;
-    }
-`;
 
 const MedicamentDetailsForm: React.FC<{ medicamentId: string }> = ({ medicamentId }) => {
     const [details, setDetails] = useState<DetailedMedicamentInfo>({});
+    const [groupes, setGroupes] = useState<{_id: string; nomGroupe: string }[]>([]);
+    const [isNewGroupe, setIsNewGroupe] = useState<boolean>(false);
     const router = useRouter();
+
+    useEffect(() => {
+        const fetchGroupes = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/api/groupes');
+                setGroupes(response.data);
+            } catch (error) {
+                console.error("Erreur lors de la recuperation des groupes :", error);
+            }
+        };
+        fetchGroupes();
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -164,14 +155,12 @@ const MedicamentDetailsForm: React.FC<{ medicamentId: string }> = ({ medicamentI
             // Mise à jour du médicament avec les détails additionnels
             await axios.patch(`http://localhost:3000/api/medicaments/${medicamentId}`, details);
             alert('Détails ajoutés avec succès !');
-            router.push('/medicaments'); // Redirection vers la liste des médicaments
+            router.push('/medicament/list'); // Redirection vers la liste des médicaments
         } catch (error) {
             console.error("Erreur lors de l'ajout des détails :", error);
             alert("Erreur lors de l'ajout des détails.");
         }
     };
-
-
 
     return (
         <Container>
@@ -180,7 +169,6 @@ const MedicamentDetailsForm: React.FC<{ medicamentId: string }> = ({ medicamentI
                     <Title>Informations détaillées</Title>
                     <Subtitle>Ces informations peuvent être ajoutées ultérieurement</Subtitle>
                 </TextDetails>
-
                 <InputRow>
                     <InputGroup>
                         <Label>Composition</Label>
@@ -201,7 +189,6 @@ const MedicamentDetailsForm: React.FC<{ medicamentId: string }> = ({ medicamentI
                         />
                     </InputGroup>
                 </InputRow>
-
                 <InputRow>
                     <InputGroup>
                         <Label>Type de conservation</Label>
@@ -222,7 +209,6 @@ const MedicamentDetailsForm: React.FC<{ medicamentId: string }> = ({ medicamentI
                         />
                     </InputGroup>
                 </InputRow>
-
                 <InputRow>
                     <InputGroup>
                         <Label>Ingrédients</Label>
@@ -243,7 +229,6 @@ const MedicamentDetailsForm: React.FC<{ medicamentId: string }> = ({ medicamentI
                         />
                     </InputGroup>
                 </InputRow>
-
                 <InputRow>
                     <InputGroup>
                         <Label>Forme pharmaceutique</Label>
@@ -263,8 +248,37 @@ const MedicamentDetailsForm: React.FC<{ medicamentId: string }> = ({ medicamentI
                             onChange={handleChange}
                         />
                     </InputGroup>
+                    <InputGroup>
+                        <Label>Groupe</Label>
+                        <select
+                            name="groupe"
+                            value={isNewGroupe ? '' : details.groupe || ''}
+                            onChange={(e) => {
+                                if (e.target.value === 'new') {
+                                    setIsNewGroupe(true);
+                                    setDetails(prev => ({ ...prev, groupe: '' }));
+                                } else {
+                                    setIsNewGroupe(false);
+                                    setDetails(prev => ({ ...prev, groupe: e.target.value }));
+                                }
+                            }}
+                        >
+                            <option value="">Sélectionnez un groupe</option>
+                            {groupes.map((groupe) => (
+                                <option key={groupe._id} value={groupe._id}>{groupe.nomGroupe}</option>
+                            ))}
+                            <option value="new">Créer un nouveau groupe</option>
+                        </select>
+                        {isNewGroupe && (
+                            <Input
+                                type="text"
+                                name="newGroupe"
+                                placeholder="Nom du nouveau groupe"
+                                onChange={(e) => setDetails(prev => ({ ...prev, groupe: e.target.value }))}
+                            />
+                        )}
+                    </InputGroup>
                 </InputRow>
-
                 <ButtonContainer>
                     <Button type="button" onClick={() => router.back()}>
                         Retour
@@ -275,3 +289,4 @@ const MedicamentDetailsForm: React.FC<{ medicamentId: string }> = ({ medicamentI
         </Container>
     );
 };
+export default MedicamentDetailsForm;

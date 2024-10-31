@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import {useRouter} from "next/navigation";
+
 interface Medicament {
     nom: string;
     description: string;
@@ -212,7 +213,6 @@ const AddForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Données envoyées :", medicament);
         try {
             const response = await axios.post('http://localhost:3000/api/medicaments', medicament);
             // alert('Médicament ajouté avec succès !');
@@ -265,7 +265,7 @@ const AddForm: React.FC = () => {
                 </InputRow>
 
                 <ButtonContainer>
-                    <Button type="button" onClick={() => setMedicament({ nom: '', description: '', dosage: '', prix: 0 })}>
+                    <Button type="reset" onClick={() => setMedicament({ nom: '', description: '', dosage: '', prix: 0 })}>
                         Annuler
                     </Button>
                     <Button type="submit">Ajouter</Button>

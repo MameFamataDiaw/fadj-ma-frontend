@@ -1,5 +1,10 @@
 'use client'
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { useRouter, useParams } from 'next/navigation';
+
+
 const Container = styled.div`
     padding: 20px;
     max-width: 1229px;
@@ -60,7 +65,7 @@ const ImageContainer = styled.div`
         padding-top: 20px;
 //     float: left;
 //     margin-right: 20px;
-// `
+`
 const MedicationImage = styled.img`
     width: 100%;
     border-radius: 8px;
@@ -104,7 +109,42 @@ const Footer = styled.footer`
   border-top: 1px solid #ddd;
   margin-top: 20px;
 `;
-const DetailsPage = () =>{
+
+interface MedicationDetails {
+    nom: string;
+    composition: string;
+    fabricant: string;
+    typeCons: string;
+    dateExp: string;
+    description: string;
+    dosage: string;
+    ingredients: string;
+    effets: string;
+    formePharma: string;
+}
+
+const DetailsPage: React.FC = () => {
+    const [medicament, setMedicament] = useState<MedicationDetails | null>(null);
+    const router = useRouter();
+    const params = useParams();
+    const medicamentId = params?.id as string;
+
+    useEffect(() => {
+        const fetchMedicamentDetails = async () => {
+            if (medicamentId) {
+                try {
+                    const response = await axios.get(`http://localhost:3000/api/medicaments/${medicamentId}`);
+                    setMedicament(response.data);
+                } catch (error) {
+                    console.error("Erreur lors de la récupération des détails du médicament :", error);
+                }
+            }
+        };
+        fetchMedicamentDetails();
+    }, [medicamentId]);
+
+    if (!medicament) return <p>Chargement des détails...</p>;
+
     return (
         <Container>
             <Header><Medic>Medicaments</Medic> &gt; <Alldetails>Tous les details</Alldetails></Header>
@@ -113,73 +153,40 @@ const DetailsPage = () =>{
                     <MedicationImage src="medicament.png" alt="Image du medicament" />
                 </ImageContainer>
                 <InfoTexts>
-                    <MedicationTitle>Augmentin 625 Duo comprime</MedicationTitle>
-
+                    <MedicationTitle>{medicament.nom}</MedicationTitle>
                     <SectionTitle>Composition</SectionTitle>
-                    <InfoText>Amoxicillin-500mg + Clavulanic Acid-125mg</InfoText>
+                    <InfoText>{medicament.composition}</InfoText>
 
                     <SectionTitle>Fabricant/Commercant</SectionTitle>
-                    <InfoText>GlaxoSmithKline Pharmaceutical Ltd</InfoText>
+                    <InfoText>{medicament.fabricant}</InfoText>
 
                     <SectionTitle>Type de consommation</SectionTitle>
-                    <InfoText>Oral</InfoText>
+                    <InfoText>{medicament.typeCons}</InfoText>
 
                     <SectionTitle>Date expiration</SectionTitle>
-                    <InfoText>25 Janvier</InfoText>
+                    <InfoText>{new Date(medicament.dateExp).toLocaleDateString()}</InfoText>
                 </InfoTexts>
             </MedicationInfo>
 
-                <SectionTitle>Description :</SectionTitle>
-                <DescriptionText>
-                    Augmentin 625 DuoComprimé est utilisé pour traiter les infections bactériennes du corps qui affectent la peau, les tissus mous, les poumons, les oreilles, les voies urinaires et les sinus nasaux.
-                    Il convient de mentionner que les infections virales comme la grippe et le rhume ne sont pas traitées par ce médicament.
-                      Augmentin 625 Duo Tablet se compose de deux médicaments : l’amoxicilline et l’acide clavulanique.
-                    L'amoxicilline agit en détruisant la couche protéique externe, tuant ainsi les bactéries (action bactéricide).
-                    L'acide clavulanique inhibe l'enzyme bêta-lactamase, qui empêche les bactéries de détruire l'efficacité de l'amoxicilline.
-                    En conséquence, l’action de l’acide clavulanique permet à l’amoxicilline de mieux agir et de tuer les bactéries.
-                    Augmentin 625 Duo Tablet n'agit pas contre les infections causées par des virus, notamment le rhume et la grippe.
-                      La dose d'Augmentin 625 Duo Tablet peut varier en fonction de votre état et de la gravité de l'infection.
-                    En outre, il est recommandé de terminer le traitement même si vous vous sentez mieux, car il s'agit d'un antibiotique,
-                    et le laisser entre les deux peut entraîner une infection même grave qui, en fait, cessera également de répondre à l'antibiotique
-                    (résistance aux antibiotiques). . Les effets secondaires courants du comprimé Augmentin 625 Duo comprennent des vomissements, des nausées et de la diarrhée. Il se peut que tout le monde ne ressente pas les effets secondaires ci-dessus.
-                    En cas d'inconfort, parlez-en à un médecin.  Avant de commencer Augmentin 625 Duo Tablet, veuillez informer votre médecin si vous avez une allergie (à tout antibiotique) ou des problèmes rénaux ou hépatiques. Ne prenez pas Augmentin 625 Duo Tablet seul en automédication, car cela pourrait entraîner une résistance aux antibiotiques dans laquelle les antibiotiques n'agissent pas contre des infections bactériennes spécifiques. Augmentin 625 Duo Tablet est sans danger pour les enfants s’il est prescrit par un médecin ; la dose et la durée peuvent varier en fonction du poids de l’enfant et de la gravité de l’infection.
-                    Informez votre médecin de tous les médicaments que vous prenez et de votre état de santé afin d'exclure tout effet secondaire désagréable.
-                </DescriptionText>
+            <SectionTitle>Description :</SectionTitle>
+            <DescriptionText>{medicament.description}</DescriptionText>
 
-                <SectionTitle>Dosage et posologie</SectionTitle>
-                <DescriptionText>
-                    Posologie usuelle
-                    Prendre Augmentin de préférence en début de repas avec un demi-verre d'eau au moins. Cela permet d'assurer une efficacité et une tolérance optimales. Sauf prescription médicale contraire, la posologie suivante est applicable:
-                    Adulte
-                    Infections légères, modérées à sévères:
-                    625 mg d'Augmentin (500/125) 3 fois par jour ou, dans certains cas,
-                    1 g d'Augmentintin (875/125) 2 fois par jour.
-                    Le sillon de sécabilité des comprimés filmés à 1 g est uniquement destiné à faciliter la prise du comprimé. Les comprimés filmés ne sont pas destinés à réduire la dose de moitié. Les deux moitiés doivent être prises simultanément.
-                    Une fois commencé, tout traitement par antibiotiques doit être poursuivi pendant la période prescrite par le médecin.
-                    Les symptômes de la maladie disparaissent fréquemment avant la guérison complète de l'infection. Pour cette raison, il ne faut pas arrêter le traitement avant terme, même si vous vous sentez mieux.
-                    Ne changez pas de votre propre chef le dosage prescrit. Adressez-vous à votre médecin ou à votre pharmacien si vous estimez que l'efficacité du médicament est trop faible ou au contraire trop forte.
-                </DescriptionText>
+            <SectionTitle>Dosage et posologie</SectionTitle>
+            <DescriptionText>{medicament.dosage}</DescriptionText>
 
-                <SectionTitle>Ingredients actifs</SectionTitle>
-                <DescriptionText>
-                    Ingrédients (INCI) : Eau (Aqua), Carbonate de calcium, Glycérine, Silicate d'aluminium et de magnésium, Extrait de Calendula officinalis, Alcool, Extrait de résine de Commiphora myrrha, Gomme de xanthane, Glycyrrhizate d'ammonium, arôme (arôme)*, limonène*.  *À partir d'huiles essentielles naturelles. Des ingrédients bio.
-                </DescriptionText>
+            <SectionTitle>Ingrédients actifs</SectionTitle>
+            <DescriptionText>{medicament.ingredients}</DescriptionText>
 
-                <SectionTitle>Effets secondaire</SectionTitle>
-                <DescriptionText>
-                    Vomissement <br/>
-                    Diarrhée <br/>
-                    Indigestion <br/>
-                </DescriptionText>
+            <SectionTitle>Effets secondaires</SectionTitle>
+            <DescriptionText>{medicament.effets}</DescriptionText>
 
-                <SectionTitle>Forme pharmaceutique</SectionTitle>
-                <InfoText>Comprime</InfoText>
-
+            <SectionTitle>Forme pharmaceutique</SectionTitle>
+            <InfoText>{medicament.formePharma}</InfoText>
 
             <Footer>
-                Propulsé par Fadj-Ma © 2024 • Version 1.0
+               <p>Propulsé par Fadj-Ma © 2024 • Version 1.0</p>
             </Footer>
         </Container>
-    )
-}
+    );
+};
 export default DetailsPage;

@@ -13,11 +13,9 @@ interface ButtonProps {
 const FormContainer = styled.div`
     background-color: #EDF1F5;
     border: none;
-    padding: 40px;
     margin: 0 auto;
-    //width: 100%;
-    height: 300px;
-    max-width: 800px;
+    height: 82vh;
+    width: 148vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,9 +25,7 @@ const FormContainer = styled.div`
 const Form = styled.form`
     display: flex;
     flex-direction: column;
-    //box-sizing: border-box;
-    //justify-content: center;
-    //padding-bottom: 30;
+   margin: 20px auto;
 `
 
 const ButtonContainer = styled.div`
@@ -199,10 +195,22 @@ const RegisterForm: React.FC = () => {
             const res = await axios.post('http://localhost:3000/signup', { ...formData, dateNaiss });
             if (res.status === 200) {
                 localStorage.setItem("authToken", res.data.token);
+                setFormData({
+                    prenom: '',
+                    nom: '',
+                    genre: '',
+                    jourNaiss: '',
+                    moisNaiss: '',
+                    anneeNaiss: '',
+                    email: '',
+                    password: '',
+                    confirmPassword: '',
+                });
                 router.push('/login');
             }
         } catch (error) {
             console.error('Erreur lors de l\'inscription', error);
+            alert("Erreur lors de l'inscription. Veuillez réessayer.");
         }
     };
 
@@ -211,8 +219,8 @@ const RegisterForm: React.FC = () => {
     );
 
     return (
-            <FormContainer onSubmit={handleSubmit}>
-                <Form>
+            <FormContainer>
+                <Form onSubmit={handleSubmit}>
                     <ButtonContainer>
                         <Button type="button" onClick={handleLoginRedirect}>
                             Connectez-vous
@@ -230,7 +238,7 @@ const RegisterForm: React.FC = () => {
                                 type="radio"
                                 name="genre"
                                 value="homme"
-                                checked={formData.genre === 'Homme'}
+                                checked={formData.genre === 'homme'}
                                 onChange={handleChange}
                             />
                             Homme
@@ -240,7 +248,7 @@ const RegisterForm: React.FC = () => {
                                 type="radio"
                                 name="genre"
                                 value="femme"
-                                checked={formData.genre === 'Femme'}
+                                checked={formData.genre === 'femme'}
                                 onChange={handleChange}
                             />
                             Femme
