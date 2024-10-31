@@ -1,8 +1,8 @@
 import React from 'react';
 import Topbar from '@/app/component/Bar/Topbar'
-import DetailsPage from '../component/Medicament/DetailsPage'
+import DetailsPage from '../../../component/Medicament/DetailsPage'
 
-const Details = () => {
+const Page = () => {
     return (
         <div>
             <Topbar />
@@ -11,4 +11,4 @@ const Details = () => {
     );
 };
 
-export default Details;
+export default Page;
