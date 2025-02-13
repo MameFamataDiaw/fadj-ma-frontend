@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
+import { FaAngleDoubleRight, FaChevronRight, FaChevronDown, FaPlus, FaChevronLeft } from "react-icons/fa";
 
 interface Groupe {
+    _id: string;
     nomGroupe: string;
-    // autres propriétés...
 }
 
 interface Medicament {
@@ -18,24 +19,42 @@ interface Medicament {
 }
 
 const Container = styled.div`
-    padding: 10px 30px;
-    max-width: 97%;
-    margin: 0;
-    height: 99%;
-    background: #EDF1F5;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 90vh;
+    // margin-top: 100px;
+    margin-left: 20%;
+    bottom: 0;
+
+    @media (max-width: 480px){
+        width: 100%;
+        margin-left: 0;
+    }
 `
+
+const MainContent = styled.div`
+    flex: 1;
+    background-color: #EDF1F5;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+`;
 const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 5px;
-    padding-top: 20px;
+
+    @media (max-width: 480px){
+        // flex-direction: column;
+        
+    }
 `
 const HeaderText = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 20px;
+    // margin-top: 20px;
 `
 const Header = styled.h2`
     font-family: 'Poppins',sans-serif;
@@ -45,6 +64,10 @@ const Header = styled.h2`
     line-height: 24px;
     color: #1D242E;
     margin-bottom: 0;
+
+    @media (max-width: 480px){
+        font-size: 16px;
+    }
 `
 const ListText = styled.p`
     font-family: 'Poppins',sans-serif;
@@ -54,11 +77,19 @@ const ListText = styled.p`
     line-height: 21px;
     color: #1D242E;
     margin-top: 0;
+
+    @media (max-width: 480px){
+        font-size: 12px;
+    }
 `
 const SearchContainer = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+
+    @media (max-width: 480px){
+        flex-direction: column;
+    }
 `
 const SearchInput = styled.input`
     padding: 8px;
@@ -74,6 +105,11 @@ const SearchInput = styled.input`
     background: #E3EBF3;
     border: 0.2px solid #071222;
     border-radius: 4px;
+
+    @media (max-width: 480px){
+        width: 200px;
+        margin-bottom: 10px;
+    }
 `
 const NewMedicLink = styled.button`
     width: 217px;
@@ -81,30 +117,49 @@ const NewMedicLink = styled.button`
     background: #FFFFFF;
     border: 0.4px solid #000000;
     border-radius: 4px;
-    padding: 8px;
+    // padding: 8px;
     margin-bottom: 0;
     a{
         text-decoration: none;
         font-family: 'Poppins',sans-serif;
         font-style: normal;
         font-weight: 400;
-        font-size: 15px;
+        font-size: 14px;
         line-height: 22px;
         color: #000000;
+    }
+
+    @media (max-width: 480px){
+        // display: none;
+
+        a{
+            font-size: 12px;
+        }
     }
 `
 const FilterSelect = styled.select`
     padding: 10px;
-    font-size: 16px;
-    margin-left: 10px;
-    border: 1px solid #ddd;
+    font-size: 14px;
+    // margin-left: 10px;
+    text-align: center;
+    border: 1px solid #000000;
     border-radius: 4px;
     width: 217px;
     height: 38px;
+    cursor: pointer;
+`
+
+const TableContainer = styled.div`
+    
+    // @media (max-width: 480px){
+    // width: 100%;
+    //    overflow-x: auto;
+    //    white-space: nowrap;
+    // }
 `
 const Table = styled.table`
     width: 100%;
-    height: 400px;
+    height: auto;
     position: relative;
     justify-content: center;
     background: #FFFFFF;
@@ -123,12 +178,20 @@ const TableHeader = styled.th`
     font-size: 16px;
     line-height: 22px;
     color: #1D242E;
+
+    @media (max-width: 480px){
+        &:nth-child(2),&:nth-child(3) { 
+            display: none;
+        }
+
+        font-size: 12px;
+    }
     
 `;
 const TableRow = styled.tr`
-    //&:nth-child(even) {
-    //    background-color: #f9f9f9;
-    //}
+    &:nth-child(even) {
+       background-color: #f9f9f9;
+    }
 `
 const TableCell = styled.td`
     padding: 10px;
@@ -136,23 +199,64 @@ const TableCell = styled.td`
     font-family: 'Poppins',sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 22px;
     color: #1D242E;
-`
+
+    button{
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    @media (max-width: 480px){
+        &:nth-child(2),&:nth-child(3) { 
+            display: none;
+        }
+
+        font-size: 12px;
+    }
+`;
+
 const ActionButton = styled.a`
     color: #1D242E;
-    background: none;
     cursor: pointer;
     font-size: 16px;
-    text-decoration: none;
+    
 `
 const PaginationContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+    position: right;
+
+    span{
+        font-family: 'Poppins',sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 22px;
+        color:#000000;
+    }
+
+    button{
+        border: 1px;
+        border-radius: 100%;
+        background: #FFFFFF;
+    }
 `
+
+const AddIcon = styled(FaPlus)`
+    // cursor: pointer;
+    // align-items: left;
+    // margin-left: auto;
+    text-align: center;
+
+  @media (min-width: 481px) {
+    // display: none;
+  }
+`;
 
 const InventoryPage: React.FC = () => {
     const [medicaments, setMedicaments] = useState<Medicament[]>([]);
@@ -160,10 +264,29 @@ const InventoryPage: React.FC = () => {
     const [filteredMedicaments, setFilteredMedicaments] = useState<Medicament[]>([]);
     const [groupFilter, setGroupFilter] = useState('');
     const [totalCount, setTotalCount] = useState(0);
-    const [selectedGroup, setSelectedGroup] = useState('');
+    const [groupes, setGroupes] =  useState<{_id: string; nomGroupe: string }[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
     const router = useRouter();
+
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            router.push("/login"); // Redirige si l'utilisateur n'est pas authentifié
+        }
+    }, []);
+
+    useEffect(() => {
+        const fetchGroups = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/groupes');
+                setGroupes(response.data);
+            } catch (error) {
+                console.error("Erreur lors de la recuperation des groupes", error)
+            }
+        };
+        fetchGroups();
+    }, []);
 
     useEffect(() => {
         fetchMedicaments();
@@ -175,7 +298,7 @@ const InventoryPage: React.FC = () => {
 
     const fetchMedicaments = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/api/medicaments');
+            const response = await axios.get('http://localhost:3001/api/medicaments');
             setMedicaments(response.data);
             setTotalCount(response.data.length);
         } catch (error) {
@@ -214,14 +337,16 @@ const InventoryPage: React.FC = () => {
 
     return(
         <Container>
+            <MainContent>
             <HeaderContainer>
                 <HeaderText>
                     <Header>médicaments ({totalCount})</Header>
                     <ListText>Liste des médicaments disponibles a la vente</ListText>
                 </HeaderText>
                 <NewMedicLink>
-                    <a href="/medicament">Nouveau médicament</a>
+                    <a href="/medicament"><AddIcon /> Nouveau médicament</a>
                 </NewMedicLink>
+                
             </HeaderContainer>
 
             <SearchContainer>
@@ -231,30 +356,30 @@ const InventoryPage: React.FC = () => {
                     placeholder="Rechercher dans l'inventaire des médicaments..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    
                 />
+                {/* <FaSearch/> */}
                 {/* Filtre de groupe */}
                 <FilterSelect value={groupFilter} onChange={(e) => setGroupFilter(e.target.value)}>
                     <option value="">Selectionnez un groupe</option>
-                    <option value="Medecine generique">Médecine générique</option>
-                    <option value="Antibiotiques">Antibiotiques</option>
-                    <option value="Antihypertenseurs">Antihypertenseurs</option>
-                    <option value="Diabete">Diabete</option>
-                    <option value="Maladies cardiovasculaires">Maladies cardiovasculaires</option>
-                    <option value="Produits à base de plantes">Produits à base de plantes</option>
-                    <option value="Crèmes et pommades cutanées">Crèmes et pommades cutanées</option>
-                    <option value="Gels et sprays anti-inflammatoires">Gels et sprays anti-inflammatoires</option>
+                    {groupes.map((groupe?) => (
+                        <option key={groupe?._id} value={groupe?.nomGroupe}>
+                            {groupe?.nomGroupe}
+                        </option>
+                    ))}
                 </FilterSelect>
             </SearchContainer>
             {/* Tableau des médicaments */}
+            <TableContainer>
             <Table>
                 <thead>
                 <tr>
                     <TableHeader>Nom du médicament</TableHeader>
-                        <TableHeader>ID du médicament</TableHeader>
-                        <TableHeader>Nom de groupe</TableHeader>
-                        <TableHeader>Stock en quantié</TableHeader>
-                        <TableHeader>Action</TableHeader>
-                    </tr>
+                    <TableHeader>ID du médicament</TableHeader>
+                    <TableHeader>Nom de groupe</TableHeader>
+                    <TableHeader>Stock en quantié</TableHeader>
+                    <TableHeader>Action</TableHeader>
+                </tr>
                 </thead>
                 <tbody>
                 {filteredMedicaments.map((med)  => (
@@ -264,29 +389,27 @@ const InventoryPage: React.FC = () => {
                         <TableCell>{med.groupe?.nomGroupe || 'Groupe non spécifié'}</TableCell>
                         <TableCell>{med.stock}</TableCell>
                         <TableCell>
-                            {/*<Link href="/medicament/details" passHref>*/}
-                            {/*    <ActionButton>*/}
-                            {/*        Voir tous les details »*/}
-                            {/*    </ActionButton>*/}
-                            {/*</Link>*/}
-                            <button onClick={() => handleDetails(med._id)}>Voir tous les détails</button>
+                            <button onClick={() => handleDetails(med._id)}>Voir tous les détails  <FaAngleDoubleRight style={{ fontSize: "10px", color: "#1D242E" }} /></button>
                         </TableCell>
                     </TableRow>
                 ))}
                 </tbody>
             </Table>
+            </TableContainer>
             <PaginationContainer>
-                {/*<span>Affichage de {itemsPerPage * (currentPage - 1) + 1} à {Math.min(currentPage * itemsPerPage, filteredMedications.length)} résultats sur {filteredMedications.length}</span>*/}
+                <span>Affichage de {itemsPerPage * (currentPage - 1) + 1} à {Math.min(currentPage * itemsPerPage, filteredMedicaments.length)} résultats sur {filteredMedicaments.length}</span>
                 <div>
                     <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                        ‹ Précédent
+                        <FaChevronLeft style={{ fontSize: "10px", color: "#1D242E"}} />
                     </button>
-                    <span>Page {currentPage} sur {totalPages}</span>
+                    <span>  Page {currentPage} <FaChevronDown style={{ fontSize: "8px", color: "#1D242E"}} />  </span>
+                    {/* <span>Page {currentPage} sur {totalPages}</span> */}
                     <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                        Suivant ›
+                       <FaChevronRight style={{ fontSize: "10px", color: "#1D242E"}} />
                     </button>
                 </div>
             </PaginationContainer>
+            </MainContent>
         </Container>
     );
 }

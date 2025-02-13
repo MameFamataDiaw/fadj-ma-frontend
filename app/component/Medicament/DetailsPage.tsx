@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useRouter, useParams } from 'next/navigation';
+import {router} from "next/client";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 
 const Container = styled.div`
-    padding: 20px;
-    max-width: 1229px;
-    margin: auto;
+    padding: 20px 50px;
+    max-width: 100%;
+    margin: 0;
     background: #EDF1F5;
 `
 const Header = styled.h2`
@@ -60,6 +62,7 @@ const MedicationTitle = styled.h1`
     margin-top: 10px;
 `
 const ImageContainer = styled.div`
+display: flex;
         width: 274px;
         height: 308px;
         padding-top: 20px;
@@ -67,17 +70,25 @@ const ImageContainer = styled.div`
 //     margin-right: 20px;
 `
 const MedicationImage = styled.img`
-    width: 100%;
+    display: block;
+    width: 200px;
+    height: 240px;
+    margin-right: 100px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 `
+const InfoImage = styled.div` 
+    display: flex;
+`
 const InfoTexts = styled.div` 
-    
+    // display: flex;
+    // flex-direction: column;
 `
 const MedicationInfo = styled.div` 
-    margin: auto 150px;
+    // margin: auto;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: left;
 `
 const InfoText = styled.p`
     font-family: 'Poppins',sans-serif;
@@ -130,10 +141,17 @@ const DetailsPage: React.FC = () => {
     const medicamentId = params?.id as string;
 
     useEffect(() => {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            router.push("/login"); // Redirige si l'utilisateur n'est pas authentifié
+        }
+    }, []);
+
+    useEffect(() => {
         const fetchMedicamentDetails = async () => {
             if (medicamentId) {
                 try {
-                    const response = await axios.get(`http://localhost:3000/api/medicaments/${medicamentId}`);
+                    const response = await axios.get(`http://localhost:3001/api/medicaments/${medicamentId}`);
                     setMedicament(response.data);
                 } catch (error) {
                     console.error("Erreur lors de la récupération des détails du médicament :", error);
@@ -147,11 +165,15 @@ const DetailsPage: React.FC = () => {
 
     return (
         <Container>
-            <Header><Medic>Medicaments</Medic> &gt; <Alldetails>Tous les details</Alldetails></Header>
+            <Header><Medic>Medicaments <FaChevronRight style={{ fontSize: "10px", color: "#1D242E", paddingTop: "9px", left: "10px"}} /></Medic>  <Alldetails>Tous les details</Alldetails></Header>
             <MedicationInfo>
-                <ImageContainer>
-                    <MedicationImage src="medicament.png" alt="Image du medicament" />
-                </ImageContainer>
+                {/* <InfoImage> */}
+                <FaChevronLeft style={{ fontSize: "10px", color: "#1D242E", paddingRight: "100px"}} />
+                {/* <ImageContainer> */}
+                    <MedicationImage src="/medicament.png" alt="Image du medicament" />
+                {/* </ImageContainer> */}
+                <FaChevronRight style={{ fontSize: "10px", color: "#1D242E", paddingRight: "100px"}} />
+                {/* </InfoImage> */}
                 <InfoTexts>
                     <MedicationTitle>{medicament.nom}</MedicationTitle>
                     <SectionTitle>Composition</SectionTitle>

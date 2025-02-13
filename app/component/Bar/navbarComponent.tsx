@@ -3,11 +3,10 @@
 import styled from "styled-components";
 
 const Header = styled.header`
-    /* side_nav_bg */
-    max-width: 880px;
-    height: 50px ;
+    max-width: 800px;
+    height: 30px ;
     margin: 0 auto;
-    //margin-top: 60px;
+    margin-top: 30px;
     padding-top: 20px;
     padding-bottom: 20px;
     background: #1D242E;
@@ -29,7 +28,7 @@ const Title = styled.h3`
     font-family: 'Poppins',sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 24px;
     text-align: center;
     letter-spacing: 0.1em;
@@ -39,6 +38,11 @@ const Title = styled.h3`
     //margin-top: 5px;
     //padding-bottom: 2px;
     //padding-top: 10px;
+
+    @media (max-width: 480px){
+        font-size: 12px;
+        line-height: 20px;
+    }
 `;
 
 const Logo = styled.div`
@@ -52,15 +56,25 @@ const Logo = styled.div`
 const LogoText = styled.p`
     font-family: 'Poppins', sans-serif;
     font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+    font-weight: semi-bold;
+    font-size: 14px;
+    line-height: 20px;
     color: #FFFFFF;
+
+     @media (max-width: 480px){
+        font-size: 12px;
+        line-height: 26px;
+    }
 `;
 
 const LogoImg = styled.img`
     width: 35px;
     height: 35px;
+
+     @media (max-width: 480px){
+        width: 25px;
+        height: 25px;
+    }
 
 `;
 

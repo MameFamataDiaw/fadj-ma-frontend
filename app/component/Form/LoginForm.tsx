@@ -4,7 +4,6 @@ import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
 
-
 interface ButtonProps {
     $primary?: boolean;
 }
@@ -13,13 +12,30 @@ const FormContainer = styled.div`
     background-color: #EDF1F5;
     max-width: 800px;
     height: 300px;
-    padding: 40px;
     margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 60px;
     border: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: 480px){
+        // max-width: 400px;
+        margin: 0;
+    }
+`;
+
+const ButtonContainer = styled.div`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    @media (max-width: 480px){
+        margin: 10px auto;
+    }
 `;
 
 const Button = styled.button<ButtonProps>`
@@ -36,20 +52,22 @@ const Button = styled.button<ButtonProps>`
     width: 190px;
     height: 30px;
     margin: 10px 1%;
-`;
-const ButtonContainer = styled.div`
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+
+    @media (max-width: 480px){
+        width: 110px;
+        font-size: 12px;
+    }
 `;
 
 const InputContainer = styled.div`
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: 480px){
+        padding-bottom: 10px;
+    }
 `
 const Input = styled.input`
     background: none;
@@ -59,10 +77,15 @@ const Input = styled.input`
     margin: 8px 0;
     border: 0.4px solid #000000;
     border-radius: 10px;
-  &:focus {
-    outline: none;
-    border-color: #61808f;
-  }
+
+    &:focus {
+        outline: none;
+        border-color: #61808f;
+    }
+
+    @media (max-width: 480px){
+        width: 82%;
+    }
 `;
 
 const Label = styled.label`
@@ -76,11 +99,15 @@ const Label = styled.label`
     font-size: 14px;
     line-height: 24px;
     color: #000000;
+
+    @media (max-width: 480px){
+        margin-right: auto;
+        margin-left: 10px;
+    }
 `;
 
 const ForgotPassword = styled.a`
     display: block;
-    //margin-left: 265px;
     margin-top: 5px;
     margin-bottom: 5px;
     font-family: 'Poppins',sans-serif;
@@ -92,14 +119,14 @@ const ForgotPassword = styled.a`
     text-align: right;
     cursor: pointer;
     text-decoration: none;
-  
-  &:hover {
-    text-decoration: underline;
-  }
+
+    @media (max-width: 480px){
+        text-align: left;
+        margin-left: 8px;
+    }
 `;
 
 const SubmitButton = styled.button`
-    box-sizing: border-box;
     background: #A7DBF5;
     border: 0.4px solid #000000;
     border-radius: 10px;
@@ -112,13 +139,16 @@ const SubmitButton = styled.button`
     font-weight: 500;
     font-size: 14px;
     line-height: 24px;
+    cursor: pointer;
   
-  //&:hover {
-  //  background-color: #90CAF9;
-  //}
+    //&:hover {
+    //  background-color: #90CAF9;
+    //}
+
+    @media (max-width: 480px){
+        width: 110px;
+    }
 `;
-
-
 
 const LoginForm = () => {
     const router = useRouter();

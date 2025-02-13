@@ -2,31 +2,46 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
-import Topbar from '../component/Bar/Topbar'
-import Sidebar from '../component/Bar/Sidebar'
 import DashboardMetricCard from "@/app/component/Dashboard/DashboardMetricCard";
 import DashboardStats from "../component/Dashboard/DashboardStats";
 
 
 const Container = styled.div`
     display: flex;
-    width: 100%;
-    height: 90vh;
+    width: 80%;
+    margin-left: 20%;
+    height: 100%;
+
+    @media (max-width: 480px){
+        width: 100%;
+        margin-left: 0;
+    }
 `
 const MainContent = styled.div`
     flex: 1;
     background-color: #EDF1F5;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    // @media (max-width: 768px){
+    //     padding-left: 30px;
+    //     padding-right: 30px;
+    // }
 `;
 const ContentWrapper = styled.div`
-    padding: 2rem;
+    padding: 1rem 2rem;
 `;
 
 const Header = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    @media (max-width: 768px){
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 20px;
+    }
 `
 
 const Title = styled.h2`
@@ -40,31 +55,21 @@ const Title = styled.h2`
 
 `
 const RapportLink = styled.div`
-    width: 200px;
-    height: 30px;
-    box-sizing: content-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 1px;
-    gap: 10px;
+    
+    width: 150px;
+    height: 20px;
+    margin-right: 9px;
+    font-family: 'Poppins',sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #000000;
+    text-align: center;
+    padding: 10px;
     background: #FFFFFF;
     border: 0.4px solid #000000;
-    border-radius: 4px;
-    
-    span{
-
-        font-family: 'Poppins',sans-serif;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 22px;
-        color: #000000;
-        flex: none;
-        order: 0;
-        flex-grow: 0;
-    }
+    border-radius: 2px;
 `
 const SectionTitle = styled.div`
     p{
@@ -101,7 +106,7 @@ const Dashboard: React.FC = () => {
                             <p>Un aperçu rapide des données de votre pharmacie</p>
                         </SectionTitle>
                         <RapportLink>
-                            <span>Telecharger le rapport</span>
+                            Telecharger le rapport
                         </RapportLink>
                     </Header>
 

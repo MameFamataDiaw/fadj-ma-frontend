@@ -1,110 +1,125 @@
 'use client'
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components'
-import { FaLanguage } from 'react-icons/fa'
+import { FaLanguage, FaCaretDown, FaBars } from 'react-icons/fa'
 
-// const Container = styled.div`
-//     display: flex;
-// `
-// const SideContainer = styled.div`
-//     height: 50px;
-//     width: 229px;
-//     padding: 5px 20px;
-//     background: #1D242E;
-//     display: flex;
-//     align-items: center;
-// `
+const Container = styled.div`
+    display: flex;
+    width: 100%;
 
-// Styled Components
-const TopbarContainer = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #f5f7fa;
-  padding: 5px 20px;
-  height: 50px;
-  width: 98%;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+     @media (max-width: 480px){
+        // width: auto;
+    }
+`
+const SideContainer = styled.div`
+    height: 50px;
+    width: 18%;
+    padding: 5px 20px;
+    background: #1D242E;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 480px){
+        width: 30%;
+    }
+`
+
+const Logo = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: -10px;
 `;
 
-const LogoContainer = styled.div`
-    display: flex;
-    font-family: 'Poppins',sans-serif;
-    //font-style: normal;
+const LogoText = styled.p`
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 24px;
     color: #FFFFFF;
-`
-const LogoIcon = styled.div`
-    font-size: 24px;
-    color: #263343;
-    margin-right: 10px;
+`;
+
+const LogoImg = styled.img`
+    width: 30px;
+    height: 30px;
+`;
+
+const TopContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f5f7fa;
+    padding: 5px 20px;
+    //height: 50px;
+    width: 80%;
+
+    @media (max-width: 480px){
+        max-width: 70%;
+        justify-content: center;
+    }
 `
 const SearchContainer = styled.div`
-  flex-grow: 1;
-  margin: 0 10px;
-`;
+    margin: 0 10px;
 
+    @media (max-width: 480px){
+        display: none;
+    }
+`
 const SearchInput = styled.input`
-  padding: 8px 15px;
-  border-radius: 4px;
-  border: none;
-  background-color: #E3EBF3;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
-  color: rgba(29, 36, 46, 0.5);
-`;
+    padding: 8px 15px;
+    border-radius: 4PX;
+    border: none;
+    width: 350px;
+    background-color: #E3EBF3;
+    font-family: 'Poppins',sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: rgba(29, 36, 46, 0.5);
 
-// const TopContainer = styled.div`
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-//     background: #f5f7fa;
-//     padding: 5px 20px;
-//     height: 50px;
-//     width: 1000px;
-//     margin-top: 0;
-//     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-// `
-// const SearchContainer = styled.div`
-//     flex-grow: 1;
-//     margin: 0 10px;
-// `
-// const SearchInput = styled.input`
-//     padding: 8px 15px;
-//     border-radius: 4PX;
-//     border: none;
-//     background-color: #E3EBF3;
-//     font-family: 'Poppins',sans-serif;
-//     font-style: normal;
-//     font-weight: 400;
-//     font-size: 12px;
-//     line-height: 18px;
-//     color: rgba(29, 36, 46, 0.5);
-// `
+     @media (max-width: 768px){
+        width: 100px;
+        margin: 0;
+    }
+`
 const LanguageContainer = styled.div`
     display: flex;
     align-items: center;
-    margin-right: 50px;
+    margin-left: 200px;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     font-size: 12px;
     line-height: 18px;
     color: #1D242E;
+
+    @media (max-width: 768px){
+        margin-left: auto;
+    }
+
+     @media (max-width: 480px){
+        display: none;
+    }
 `;
 const WelcomeContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     color: #1D242E;
+    align-items: flex-end;
+
+    @media (max-width: 480px){
+        display: none;
+        alingn-items: left;
+        margin-left: auto; 
+    }
+
 `;
 const Welcome = styled.div`
     display: flex;
     align-items: center;
-    gap: 11px;
+    gap: 10px;
 `;
 const WelcomeIcon = styled.div`
     width: 18px;
@@ -129,6 +144,10 @@ const DateTime = styled.div`
     display: flex;
     align-items: center;
     gap: 6px;
+
+    // @media (max-width: 768px){
+    //     flex-direction: column;
+    // }
 `;
 const Today = styled.span`
     font-family: 'Poppins', sans-serif;
@@ -151,6 +170,16 @@ const Time = styled.span`
     color: #1D242E;
 `;
 
+const MenuIcon = styled(FaBars)`
+    cursor: pointer;
+    align-items: left;
+    margin-left: auto;
+
+  @media (min-width: 481px) {
+    display: none;
+  }
+`;
+
 export default function Topbar() {
     const [currentDateTime, setCurrentDateTime] = useState<{ date: string; time: string }>({
         date: '14 janvier 2022',
@@ -168,35 +197,41 @@ export default function Topbar() {
     setInterval(updateDateTime, 1000);
 
     return(
-        <TopbarContainer>
-            <LogoContainer>
-                <LogoIcon>🛒</LogoIcon>
-                Fadj-ma
-            </LogoContainer>
+        <Container>
+            <SideContainer>
+                <Logo>
+                    <LogoImg src="/logo-fadj-ma.png" alt="logo" />
+                    <LogoText>Fadj-ma</LogoText>
+                </Logo>
+            </SideContainer>
 
-            <SearchContainer>
-                <SearchInput type="text" placeholder="Recherchez n'importe quoi ici." />
-            </SearchContainer>
+            <TopContainer>
+                <SearchContainer>
+                    <SearchInput type="text" placeholder="Recherchez n'importe quoi ici." />
+                </SearchContainer>
 
-            <LanguageContainer>
-                <FaLanguage style={{ marginRight: '5px' }} />
-                Français (France) ▼
-            </LanguageContainer>
+                <LanguageContainer>
+                    <FaLanguage style={{ marginRight: '5px' }} />
+                        <span>Français (France)</span>
+                    <FaCaretDown style={{ marginRight: '5px' }} />
+                </LanguageContainer>
 
-            <WelcomeContainer>
-                <Welcome>
-                    <WelcomeIcon />
-                    <Greeting>Bonjour</Greeting>
-                </Welcome>
-                <DateTimeContainer>
-                    <DateTime>
-                        {/* Date et heure, en production cela peut être géré par une fonction pour afficher la date actuelle */}
-                        <Today>{currentDateTime.date}</Today>
-                        <Separator />
-                        <Time>{currentDateTime.time}</Time>
+                <WelcomeContainer>
+                    <Welcome>
+                        <WelcomeIcon />
+                        <Greeting>Bonjour</Greeting>
+                    </Welcome>
+                    <DateTimeContainer>
+                        <DateTime>
+                            {/* Date et heure, en production cela peut être géré par une fonction pour afficher la date actuelle */}
+                            <Today>{currentDateTime.date}</Today>
+                            <Separator />
+                            <Time>{currentDateTime.time}</Time>
                         </DateTime>
                     </DateTimeContainer>
                 </WelcomeContainer>
-        </TopbarContainer>
+                <MenuIcon />
+            </TopContainer>
+        </Container>
     );
 }

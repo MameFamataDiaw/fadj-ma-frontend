@@ -17,10 +17,16 @@ export default function Home() {
     }, [router]);
 
     return (
-      <div>
+        // useEffect(() => {
+        //     const token = localStorage.getItem("authToken");
+        //     if (!token) {
+        //         router.push("/login"); // Redirige si l'utilisateur n'est pas authentifié
+        //     }
+        // }, []);
 
+    <div>
           <Topbar />
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex'}}>
               <Sidebar />
               <div style={{ flex: 1, padding: 0 }}>
                   <Dashboard />

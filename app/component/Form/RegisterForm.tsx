@@ -1,10 +1,8 @@
 'use client'
 import styled from 'styled-components';
-import {useState} from "react";
+import { useState } from "react";
 import axios from 'axios';
-import {useRouter} from "next/navigation";
-
-
+import { useRouter } from "next/navigation";
 
 interface ButtonProps {
     $primary?: boolean;
@@ -12,31 +10,47 @@ interface ButtonProps {
 
 const FormContainer = styled.div`
     background-color: #EDF1F5;
-    border: none;
     margin: 0 auto;
-    height: 82vh;
-    width: 148vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
+    height: 100%;
+    max-width: 800px;
+    // padding: 20px auto;
+    @media (max-width: 480px){
+
+    }
+
 `;
 const Form = styled.form`
     display: flex;
     flex-direction: column;
-   margin: 20px auto;
-`
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 30px;
+
+    @media (max-width: 480px){
+        align-items: center;
+    }
+`;
 
 const ButtonContainer = styled.div`
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    padding-top: 30px;
+
+    @media (max-width: 480px){
+        margin: 10px auto;
+    }
 `;
 
+const Coordonnees = styled.div`
+    display: flex;
+    flex-direction: column;
+    // align-items: flex-start;
+    justify-content: center;
+`
+
 const Button = styled.button<ButtonProps>`
-    background: ${({$primary}) => ($primary ? '#A7DBF5' : 'none')};
+    background: ${({ $primary }) => ($primary ? '#A7DBF5' : 'none')};
     color: #000000;
     border: 0.4px solid #000000;
     border-radius: 8px;
@@ -48,78 +62,132 @@ const Button = styled.button<ButtonProps>`
     cursor: pointer;
     width: 190px;
     height: 30px;
-    margin: 10px 1%;
+    margin: auto 1%;
+
+    @media (max-width: 480px){
+        width: 110px;
+        font-size: 12px;
+    }
 `;
 
 const SectionTitle = styled.h3`
-  margin-bottom: 10px;
+    margin-bottom: 5px;
+    padding-left: 30px;
     font-family: 'Poppins',sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;
     color: #000000;
+
+    @media (max-width: 480px){
+        text-align: center;
+        padding: 0;
+    }
 `;
 
 const GenderSelection = styled.div`
     display: flex;
-    text-align: left;
-    //justify-content: center;
-    //align-items: center;
-    margin-bottom: 20px;
+    align-items: center;
+    padding-left: 25px;
+    margin-bottom: 15px;
     gap: 30px;
+
+    Input{
+        text-decoration: none;
+    }
+
+    @media (max-width: 480px){
+        justify-content: center;
+        padding: 0;
+    }
 `;
 
-
-const Label = styled.label`
-    font-size: 16px;
+const Label = styled.div`
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    font-size: 14px;
+    font-family: 'Poppins',sans-serif;
     color: #2d3748;
+
+    @media (max-width: 480px){
+        font-size: 12px;
+    }
+    
 `;
 
 const InputRow = styled.div`
     display: flex;
-    //flex-wrap: wrap;
     gap: 10px;
+    margin-bottom: 15px;
+
+    @media (max-width: 480px){
+        flex-direction: column;
+    }
 `;
+
+const InputSelect = styled.div`
+    display: flex;
+    gap: 15px;
+`
 const LabelRow = styled.label`
     position: relative;
-`
+    font-family: 'Poppins',sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+
+    @media (max-width: 480px){
+        font-size: 12px;
+    }
+`;
 const InputGroup = styled.div`
     flex: 1 1 45%;
     display: flex;
     flex-direction: column;
-`
+`;
 
 const Input = styled.input`
     flex: 1;
     padding: 8px;
     font-size: 16px;
-    border-radius: 4px;
+    border-radius: 8px;
     border: 1px solid #ccc;
+    background: none;
+    margin-bottom: 5px;
 `;
 
 const Select = styled.select`
-    padding: 10px;
-    border-radius: 4px;
+    padding: 8px;
+    border-radius: 8px;
     border: 1px solid #ccc;
-    width: 32%;
-    font-size: 16px;
+    width: 30%;
+    font-size: 14px;
+    background: none;
 `;
 
 const SubmitButton = styled.button`
-    box-sizing: border-box;
     background: #A7DBF5;
     border: 0.4px solid #000000;
     border-radius: 10px;
     color: #000000;
-    width: 400px;
-    height: 30px;
-    margin-top: 10px;
+    width: 53%;
+    height: auto;
     font-family: 'Poppins',sans-serif;
     font-style: normal;
-    font-weight: 500;
+    font-weight: bold;
     font-size: 14px;
     line-height: 24px;
+    margin: 1%;
+
+    @media (max-width: 480px){
+        width: 30%;
+        font-size: 12px;
+        line-height: 20px;
+    }
+
 `;
 
 // Définition des types pour formData et errors
@@ -219,22 +287,22 @@ const RegisterForm: React.FC = () => {
     );
 
     return (
-            <FormContainer>
-                <Form onSubmit={handleSubmit}>
-                    <ButtonContainer>
-                        <Button type="button" onClick={handleLoginRedirect}>
-                            Connectez-vous
-                        </Button>
-                        <Button type="submit" $primary>
-                            Inscrivez-vous
-                        </Button>
-                    </ButtonContainer>
+        <FormContainer>
+            <Form onSubmit={handleSubmit}>
+                <ButtonContainer>
+                    <Button type="button" onClick={handleLoginRedirect}>
+                        Connectez-vous
+                    </Button>
+                    <Button type="submit" $primary>
+                        Inscrivez-vous
+                    </Button>
+                </ButtonContainer>
 
+                <Coordonnees>
                     <SectionTitle>Vos coordonnées</SectionTitle>
-
                     <GenderSelection>
                         <Label>
-                            <input
+                            <Input
                                 type="radio"
                                 name="genre"
                                 value="homme"
@@ -244,7 +312,7 @@ const RegisterForm: React.FC = () => {
                             Homme
                         </Label>
                         <Label>
-                            <input
+                            <Input
                                 type="radio"
                                 name="genre"
                                 value="femme"
@@ -264,7 +332,7 @@ const RegisterForm: React.FC = () => {
                                 name="prenom"
                                 value={formData.prenom}
                                 onChange={handleChange}
-                                placeholder="Votre prénom"
+
                             />
                             {errors.prenom && <ErrorText message={errors.prenom} />}
                         </InputGroup>
@@ -275,7 +343,7 @@ const RegisterForm: React.FC = () => {
                                 name="nom"
                                 value={formData.nom}
                                 onChange={handleChange}
-                                placeholder="Votre nom"
+
                             />
                             {errors.nom && <ErrorText message={errors.nom} />}
                         </InputGroup>
@@ -283,34 +351,36 @@ const RegisterForm: React.FC = () => {
 
                     <LabelRow>Date de naissance</LabelRow>
                     <InputRow>
-                        <Select name="jourNaiss" value={formData.jourNaiss} onChange={handleChange}>
-                            <option>JJ</option>
-                            {[...Array(31)].map((_, i) => <option key={i} value={i+1}>{i+1}</option>)}
-                        </Select>
-                        <Select name="moisNaiss" value={formData.moisNaiss} onChange={handleChange}>
-                            <option>MM</option>
-                            {[...Array(12)].map((_, i) => <option key={i} value={i+1}>{i+1}</option>)}
-                        </Select>
-                        <Select name="anneeNaiss" value={formData.anneeNaiss} onChange={handleChange}>
-                            <option>AAAA</option>
-                            {[...Array(100)].map((_, i) => {
-                                const year = new Date().getFullYear() - i;
-                                return <option key={year} value={year}>{year}</option>
-                            })}
-                        </Select>
-                        {errors.dateNaiss && <ErrorText message={errors.dateNaiss} />}
+                        <InputSelect>
+                            <Select name="jourNaiss" value={formData.jourNaiss} onChange={handleChange}>
+                                <option>JJ</option>
+                                {[...Array(31)].map((_, i) => <option key={i} value={i + 1}>{i + 1}</option>)}
+                            </Select>
+                            <Select name="moisNaiss" value={formData.moisNaiss} onChange={handleChange}>
+                                <option>MM</option>
+                                {[...Array(12)].map((_, i) => <option key={i} value={i + 1}>{i + 1}</option>)}
+                            </Select>
+                            <Select name="anneeNaiss" value={formData.anneeNaiss} onChange={handleChange}>
+                                <option>AAAA</option>
+                                {[...Array(100)].map((_, i) => {
+                                    const year = new Date().getFullYear() - i;
+                                    return <option key={year} value={year}>{year}</option>
+                                })}
+                            </Select>
+                            {errors.dateNaiss && <ErrorText message={errors.dateNaiss} />}
+                        </InputSelect>
 
-                     </InputRow>
+                    </InputRow>
 
                     <InputRow>
                         <InputGroup>
-                            <LabelRow>Email</LabelRow>
+                            <LabelRow>E-mail</LabelRow>
                             <Input
                                 type="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder="Votre email"
+
                             />
                             {errors.email && <ErrorText message={errors.email} />}
                         </InputGroup>
@@ -321,7 +391,7 @@ const RegisterForm: React.FC = () => {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                placeholder="Votre mot de passe"
+
                             />
                             {errors.password && <ErrorText message={errors.password} />}
                         </InputGroup>
@@ -335,14 +405,15 @@ const RegisterForm: React.FC = () => {
                                 name="confirmPassword"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
-                                placeholder="Confirmez le mot de passe"
+
                             />
                             {errors.confirmPassword && <ErrorText message={errors.confirmPassword} />}
                         </InputGroup>
                     </InputRow>
-                    <SubmitButton type="submit">S’inscrire</SubmitButton>
-                </Form>
-            </FormContainer>
+                </Coordonnees>
+                <SubmitButton type="submit">S’inscrire</SubmitButton>
+            </Form>
+        </FormContainer>
     );
 };
 

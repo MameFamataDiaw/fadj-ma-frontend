@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { email, password } = req.body;
 
         try {
-            const response = await axios.post('https://localhost:3000/login', { email, password });
+            const response = await axios.post('https://localhost:3001/login', { email, password });
             res.status(200).json(response);
         } catch (error) {
             res.status(400).json({message: 'Echec de la connexion.',error});

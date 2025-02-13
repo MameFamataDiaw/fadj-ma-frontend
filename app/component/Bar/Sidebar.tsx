@@ -4,39 +4,31 @@ import styled from 'styled-components';
 import { FaThLarge, FaPills, FaSignOutAlt } from "react-icons/fa";
 import { useRouter, usePathname } from "next/navigation";
 import Image from 'next/image';
+import { useUser } from '../../context/UserContext';
 
-interface MenuItem{
+interface MenuItem {
     path: string;
     icon: React.ReactNode;
     label: string;
 }
 
-// const SidebarContainer = styled.div`
-//     width: 256px;
-//     height: 80vh;
-//     //height: 559px;
-//     background-color: #283342;
-//     color: white;
-//     display: flex;
-//     flex-direction: column;
-//     //align-items: center;
-//     padding-top: 20px;
-//     margin-top: 0;
-// `
-
 const SidebarContainer = styled.aside`
-  width: 256px;
-  height: 85vh;
-  background-color: #283342;
-  color: white;
-  display: flex;
-  flex-direction: column;
-    //margin-top: 40px;
-  padding-top: 30px;
-  //position: fixed;
-  left: 0;
-  top: 0;
+    width: 20%;
+    height: auto;
+    background-color: #283342;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+    padding-top: 30px;
+    position: fixed;
+    left: 0;
+    top: 0;
     bottom: 0;
+     
+    @media (max-width: 480px){
+        display: none;
+    }
 `;
 
 const ProfileContainer = styled.div`
@@ -55,20 +47,6 @@ const ProfileImageWrapper = styled.div`
   overflow: hidden;
   border: 0.4px solid #888888;
 `;
-
-// const ProfileImage = styled.img`
-//     box-sizing: border-box;
-//     width: 42px;
-//     height: 42px;
-//     margin-top: 20px;
-//     //background: url("./././../public/natalia.png");
-//     border: 0.4px solid #888888;
-//     border-radius: 35px;
-//     //border-radius: 50%;
-//     //margin-right: 10px;
-//     //border: 2px solid #4caf50;
-//     transform: matrix(-1, 0, 0, 1, 0, 0);
-// `
 
 const ProfileText = styled.div`
     display: flex;
@@ -115,7 +93,6 @@ const MenuLink = styled.a<{ $isActive: boolean }>`
     text-decoration: none;
     transition: background-color 0.2s ease-in-out;
     background-color: ${props => props.$isActive ? '#009688' : 'transparent'};
-
     &:hover {
         background-color: ${props => props.$isActive ? '#009688' : '#1e2a38'};
     }
@@ -144,7 +121,6 @@ const LogoutButton = styled.button`
   text-align: left;
   transition: background-color 0.2s ease-in-out;
   margin-top: auto;
-  
   &:hover {
     background-color: #1e2a38;
   }
@@ -167,6 +143,9 @@ const menuItems: MenuItem[] = [
 export default function Sidebar() {
     const router = useRouter();
     const pathname = usePathname();
+    const { user } = useUser();//acceder aux informations de l'utilisateur depuis le contexte
+
+    console.log("User dans Sidebar:", user);
 
     const handleLogOut = useCallback(() => {
         document.cookie = 'token=; Max-Age=0; path=/; secure; samesite=strict;';
@@ -179,16 +158,16 @@ export default function Sidebar() {
             <ProfileContainer>
                 <ProfileImageWrapper>
                     <Image src="/natalia.png"
-                           alt="Profile"
-                           fill
-                           sizes="42px"
-                           style={{ objectFit: 'cover' }}
-                           priority
+                        alt="Profile"
+                        fill
+                        sizes="42px"
+                        style={{ objectFit: 'cover' }}
+                        priority
                     />
                 </ProfileImageWrapper>
                 <ProfileText>
-                    <ProfileName>Modou Fall</ProfileName>
-                    <ProfileRole>Administrateur</ProfileRole>
+                    <ProfileName>{user?.prenom || 'Prénom'} {user?.nom || 'Nom'}</ProfileName>
+                    <ProfileRole>{user?.role || 'Rôle'}</ProfileRole>
                 </ProfileText>
             </ProfileContainer>
 
@@ -218,7 +197,3 @@ export default function Sidebar() {
         </SidebarContainer>
     );
 }
-// const handleLogOut = () => {
-//     document.cookie = 'token=; Max-Age=0; path=/;';//Supprime le token
-//     router.push('/login');
-// }

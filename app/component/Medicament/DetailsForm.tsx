@@ -153,7 +153,7 @@ const MedicamentDetailsForm: React.FC<{ medicamentId: string }> = ({ medicamentI
         e.preventDefault();
         try {
             // Mise à jour du médicament avec les détails additionnels
-            await axios.patch(`http://localhost:3000/api/medicaments/${medicamentId}`, details);
+            await axios.patch(`http://localhost:3001/api/medicaments/${medicamentId}`, details);
             alert('Détails ajoutés avec succès !');
             router.push('/medicament/list'); // Redirection vers la liste des médicaments
         } catch (error) {
