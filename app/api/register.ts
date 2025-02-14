@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const {prenom, nom, genre, dateNaiss, email, password} = req.body;
 
         try {
-            const response = await axios.post('https://localhost:3001/signup', { prenom, nom, genre, dateNaiss, email, password });
+            const response = await axios.post('${process.env.NEXT_PUBLIC_API_URL}/signup', { prenom, nom, genre, dateNaiss, email, password });
             res.status(200).json(response);
         } catch (error) {
             res.status(400).json({message: 'Echec de l\'inscription.', error});

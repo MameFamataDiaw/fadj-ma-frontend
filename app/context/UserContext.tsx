@@ -20,7 +20,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await axios.get('http://localhost:3001/user', {
+                const res = await axios.get('${process.env.NEXT_PUBLIC_API_URL}/user', {
                 withCredentials: true, // Assure l'envoi des cookies JWT 
             });
 

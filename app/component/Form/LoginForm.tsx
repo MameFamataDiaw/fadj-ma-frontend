@@ -159,13 +159,15 @@ const LoginForm = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/login', {
+            const response = await axios.post('${process.env.NEXT_PUBLIC_API_URL}/login', {
                 email,
                 password,
             });
+            console.log(process.env.NEXT_PUBLIC_API_URL);
             if (response.status ===  200) {
                 localStorage.setItem("authToken", response.data.token);
                 router.push('/'); // Redirection après connexion
+                
             }  else {
                 setErrorMessage("Identifiants incorrects. Veuillez réessayer.");
             }

@@ -260,7 +260,7 @@ const RegisterForm: React.FC = () => {
         const dateNaiss = `${formData.anneeNaiss}-${formData.moisNaiss}-${formData.jourNaiss}`;
 
         try {
-            const res = await axios.post('http://localhost:3000/signup', { ...formData, dateNaiss });
+            const res = await axios.post('http://localhost:3001/signup', { ...formData, dateNaiss });
             if (res.status === 200) {
                 localStorage.setItem("authToken", res.data.token);
                 setFormData({
