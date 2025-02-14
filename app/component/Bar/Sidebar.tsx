@@ -166,8 +166,10 @@ export default function Sidebar() {
                     />
                 </ProfileImageWrapper>
                 <ProfileText>
-                    <ProfileName>{user?.prenom || 'Prénom'} {user?.nom || 'Nom'}</ProfileName>
-                    <ProfileRole>{user?.role || 'Rôle'}</ProfileRole>
+                    {/* <ProfileName>{user?.prenom || 'Prénom'} {user?.nom || 'Nom'}</ProfileName>
+                    <ProfileRole>{user?.role || 'Rôle'}</ProfileRole> */}
+                    <ProfileName>Moussa Fall</ProfileName>
+                    <ProfileRole>Admin</ProfileRole>
                 </ProfileText>
             </ProfileContainer>
 
