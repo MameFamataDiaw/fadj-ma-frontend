@@ -9,10 +9,11 @@ import DashboardStats from "../component/Dashboard/DashboardStats";
 const Container = styled.main`
     flex: 1
     display: flex;
-    width: 80%;
-    margin-left: 20%;
-    height: 100%;
-    margin-top: 50px;
+    // width: 80%;
+    margin-left: 250px;
+    min-height: 100vh;
+    margin-top: 60px;
+    padding: 20px;
     background-color: #EDF1F5;
 
     @media (max-width: 480px){
