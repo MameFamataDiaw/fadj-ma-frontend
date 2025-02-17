@@ -37,9 +37,9 @@ const MainContent = styled.div`
     //     padding-right: 30px;
     // }
 `;
-const ContentWrapper = styled.div`
+// const ContentWrapper = styled.div`
     // padding: 1rem 2rem;
-`;
+// `;
 
 const Header = styled.header`
     display: flex;
@@ -108,7 +108,7 @@ const Dashboard: React.FC = () => {
             {/*<Sidebar />*/}
             <MainContent>
                 {/*<Topbar />*/}
-                <ContentWrapper>
+                {/* <ContentWrapper> */}
                     <Header>
                         <SectionTitle>
                             <Title >Tableau de bord</Title>
@@ -122,7 +122,7 @@ const Dashboard: React.FC = () => {
                     <DashboardMetricCard />
 
                     <DashboardStats />
-                </ContentWrapper>
+                {/* </ContentWrapper> */}
             </MainContent>
         </Container>
     );
