@@ -19,13 +19,21 @@ interface Medicament {
 }
 
 const Container = styled.div`
+    // display: flex;
+    // flex-direction: column;
+    // width: 80%;
+    // height: 90vh;
+    // // margin-top: 100px;
+    // margin-left: 20%;
+    // bottom: 0;
+
+    flex: 1
     display: flex;
-    flex-direction: column;
-    width: 80%;
-    height: 90vh;
-    // margin-top: 100px;
-    margin-left: 20%;
-    bottom: 0;
+    // width: 80%;
+    margin-left: 250px;
+    min-height: 100vh;
+    margin-top: 50px;
+    padding: 20px;
 
     @media (max-width: 480px){
         width: 100%;
@@ -34,11 +42,11 @@ const Container = styled.div`
 `
 
 const MainContent = styled.div`
-    flex: 1;
-    background-color: #EDF1F5;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 2rem;
+    // flex: 1;
+    // background-color: #EDF1F5;
+    // display: flex;
+    // flex-direction: column;
+    // padding: 1rem 2rem;
 `;
 const HeaderContainer = styled.div`
     display: flex;
