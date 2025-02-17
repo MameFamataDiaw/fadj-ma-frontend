@@ -58,7 +58,7 @@ const TopContainer = styled.div`
     background: #f5f7fa;
     padding: 5px 20px;
     //height: 50px;
-    width: 80%;
+    width: 82%;
 
     @media (max-width: 480px){
         max-width: 70%;
