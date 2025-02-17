@@ -7,7 +7,7 @@ import {router} from "next/client";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 
-const Container = styled.div`
+const Container = styled.main`
     padding: 20px 50px;
     max-width: 100%;
     margin: 0;
