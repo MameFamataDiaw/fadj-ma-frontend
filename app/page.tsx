@@ -19,11 +19,10 @@ export default function Home() {
     return (
     <div>
           <Topbar />
-          <div>
+          <div style={{ display: 'flex'}}>
               <Sidebar />
               <div>
                   <Dashboard />
-                  {/*<InventoryPage />*/}
               </div>
           </div>
       </div>
