@@ -16,7 +16,7 @@ const Container = styled.header`
 `
 const SideContainer = styled.div`
     height: 50px;
-    width: 250px;
+    width: 18%;
     padding: 5px 20px;
     background: #1D242E;
     display: flex;
@@ -58,8 +58,7 @@ const TopContainer = styled.div`
     background: #f5f7fa;
     padding: 5px 20px;
     //height: 50px;
-    // width: 82%;
-    margin-left: 250px;
+    width: 82%;
 
     @media (max-width: 480px){
         max-width: 70%;
