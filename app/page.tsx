@@ -17,18 +17,11 @@ export default function Home() {
     }, [router]);
 
     return (
-        // useEffect(() => {
-        //     const token = localStorage.getItem("authToken");
-        //     if (!token) {
-        //         router.push("/login"); // Redirige si l'utilisateur n'est pas authentifié
-        //     }
-        // }, []);
-
     <div>
           <Topbar />
-          <div style={{ display: 'flex'}}>
+          <div>
               <Sidebar />
-              <div style={{ flex: 1, padding: 0 }}>
+              <div>
                   <Dashboard />
                   {/*<InventoryPage />*/}
               </div>
