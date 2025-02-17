@@ -140,7 +140,7 @@ const menuItems: MenuItem[] = [
     }
 ];
 
-export const Sidebar = () => {
+export default function Sidebar() {
     const router = useRouter();
     const pathname = usePathname();
     const { user, setUser } = useUser();//acceder aux informations de l'utilisateur depuis le contexte
@@ -201,4 +201,4 @@ export const Sidebar = () => {
             </LogoutButton>
         </SidebarContainer>
     );
-}
+};
