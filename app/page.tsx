@@ -28,7 +28,7 @@ export default function Home() {
           <Topbar />
           <div style={{ display: 'flex'}}>
               <Sidebar />
-              <div style={{ flex: 1, padding: 0 }}>
+              <div>
                   <Dashboard />
                   {/*<InventoryPage />*/}
               </div>
