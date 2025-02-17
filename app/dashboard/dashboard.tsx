@@ -12,6 +12,7 @@ const Container = styled.main`
     margin-left: 20%;
     height: 100%;
     margin-top: 50px;
+    background-color: #EDF1F5;
 
     @media (max-width: 480px){
         width: 100%;
