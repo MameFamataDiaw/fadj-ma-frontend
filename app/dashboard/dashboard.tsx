@@ -14,7 +14,6 @@ const Container = styled.main`
     min-height: 100vh;
     margin-top: 50px;
     padding: 20px;
-    margin-right: 0;
     background-color: #EDF1F5;
     // display: flex;
     // width: 80%;
@@ -27,7 +26,7 @@ const Container = styled.main`
         margin-left: 0;
     }
 `
-// const MainContent = styled.div`
+const MainContent = styled.div`
     // flex: 1;
     // background-color: #EDF1F5;
     // display: flex;
@@ -37,10 +36,10 @@ const Container = styled.main`
     //     padding-left: 30px;
     //     padding-right: 30px;
     // }
-// `;
-// const ContentWrapper = styled.div`
+`;
+const ContentWrapper = styled.div`
     // padding: 1rem 2rem;
-// `;
+`;
 
 const Header = styled.header`
     display: flex;
@@ -107,7 +106,7 @@ const Dashboard: React.FC = () => {
     return (
         <Container>
             {/*<Sidebar />*/}
-            {/* <MainContent> */}
+            <MainContent>
                 {/*<Topbar />*/}
                 {/* <ContentWrapper> */}
                     <Header>
@@ -124,7 +123,7 @@ const Dashboard: React.FC = () => {
 
                     <DashboardStats />
                 {/* </ContentWrapper> */}
-            {/* </MainContent> */}
+            </MainContent>
         </Container>
     );
 };
