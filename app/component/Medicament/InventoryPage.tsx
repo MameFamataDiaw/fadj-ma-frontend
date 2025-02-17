@@ -33,6 +33,7 @@ const Container = styled.main`
     flex-direction: column;
     // width: 80%;
     margin-left: 250px;
+    margin:right: 0;
     min-height: 100vh;
     margin-top: 50px;
     padding: 20px;

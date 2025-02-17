@@ -14,6 +14,7 @@ const Container = styled.main`
     min-height: 100vh;
     margin-top: 50px;
     padding: 20px;
+    margin-right: 0;
     background-color: #EDF1F5;
     // display: flex;
     // width: 80%;
