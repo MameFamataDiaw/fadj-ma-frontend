@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react';
 import styled from 'styled-components'
 import { FaLanguage, FaCaretDown, FaBars } from 'react-icons/fa'
 
-const Container = styled.div`
+const Container = styled.header`
     display: flex;
     width: 100%;
 
@@ -13,7 +13,7 @@ const Container = styled.div`
 `
 const SideContainer = styled.div`
     height: 50px;
-    width: 16%;
+    width: 18%;
     padding: 5px 20px;
     background: #1D242E;
     display: flex;
