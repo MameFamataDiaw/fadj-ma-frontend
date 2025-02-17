@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useRouter, useParams } from 'next/navigation';
-import {router} from "next/client";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 
