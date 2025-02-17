@@ -30,6 +30,7 @@ const Container = styled.main`
     background-color: #EDF1F5;
     flex: 1;
     display: flex;
+    flex-direction: column;
     // width: 80%;
     margin-left: 250px;
     min-height: 100vh;

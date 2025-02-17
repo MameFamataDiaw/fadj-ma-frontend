@@ -9,6 +9,7 @@ import DashboardStats from "../component/Dashboard/DashboardStats";
 const Container = styled.main`
     flex: 1
     display: flex;
+    flex-direction: column;
     // width: 80%;
     margin-left: 250px;
     min-height: 100vh;
