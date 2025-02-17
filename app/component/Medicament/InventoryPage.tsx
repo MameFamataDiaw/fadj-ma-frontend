@@ -43,13 +43,13 @@ const Container = styled.main`
     }
 `
 
-const MainContent = styled.div`
+// const MainContent = styled.div`
     // flex: 1;
     // background-color: #EDF1F5;
     // display: flex;
     // flex-direction: column;
     // padding: 1rem 2rem;
-`;
+// `;
 const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
@@ -347,7 +347,7 @@ const InventoryPage: React.FC = () => {
 
     return(
         <Container>
-            <MainContent>
+            {/* <MainContent> */}
             <HeaderContainer>
                 <HeaderText>
                     <Header>médicaments ({totalCount})</Header>
@@ -419,7 +419,7 @@ const InventoryPage: React.FC = () => {
                     </button>
                 </div>
             </PaginationContainer>
-            </MainContent>
+            {/* </MainContent> */}
         </Container>
     );
 }
