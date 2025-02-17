@@ -6,7 +6,6 @@ import { FaLanguage, FaCaretDown, FaBars } from 'react-icons/fa'
 const Container = styled.div`
     display: flex;
     width: 100%;
-    position: relative;
 
      @media (max-width: 480px){
         // width: auto;
@@ -14,7 +13,7 @@ const Container = styled.div`
 `
 const SideContainer = styled.div`
     height: 50px;
-    width: 20%;
+    width: 18%;
     padding: 5px 20px;
     background: #1D242E;
     display: flex;
