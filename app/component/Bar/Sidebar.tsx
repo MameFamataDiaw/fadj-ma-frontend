@@ -15,6 +15,7 @@ interface MenuItem {
 const SidebarContainer = styled.aside`
     width: 250px;
     height: auto;
+    margin: 0;
     background-color: #283342;
     color: white;
     display: flex;
