@@ -13,12 +13,13 @@ const Container = styled.div`
 `
 const SideContainer = styled.div`
     height: 50px;
-    width: 18%;
+    width: 16%;
     padding: 5px 20px;
     background: #1D242E;
     display: flex;
     align-items: center;
     left: 0;
+    top: 0;
 
     @media (max-width: 480px){
         width: 30%;
