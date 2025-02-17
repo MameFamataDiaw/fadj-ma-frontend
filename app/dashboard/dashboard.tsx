@@ -6,7 +6,7 @@ import DashboardMetricCard from "@/app/component/Dashboard/DashboardMetricCard";
 import DashboardStats from "../component/Dashboard/DashboardStats";
 
 
-const Container = styled.div`
+const Container = styled.main`
     display: flex;
     width: 80%;
     margin-left: 20%;
