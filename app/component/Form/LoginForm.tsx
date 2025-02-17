@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
+import { setDefaultResultOrder } from 'dns';
 
 interface ButtonProps {
     $primary?: boolean;
@@ -163,16 +164,28 @@ const LoginForm = () => {
                 email,
                 password,
             });
-            if (response.status ===  200) {
-                localStorage.setItem("authToken", response.data.token);
+
+            console.log('reponse login:', response.data);//pour le debogage
+
+            if (response.data.success) {
+                const { token, user } = response.data;
+
+                // stockage du token
+                
+                localStorage.setItem("authToken", token);
+
+                // Mise a jour du contexte utilisateur
+                setDefaultResultOrder(user);
+
                 router.push('/');
                 
             }  else {
-                setErrorMessage("Identifiants incorrects. Veuillez réessayer.");
+                setErrorMessage(response.data.message || "Identifiants incorrects. Veuillez réessayer.");
             }
-        } catch (err) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
                 console.error("Erreur de connexion:", err);
-                setErrorMessage("Erreur de connexion. Veuillez vérifier vos identifiants.");
+                setErrorMessage(err.response?.data?.message || "Erreur de connexion. Veuillez vérifier vos identifiants.");
             }
     };
 

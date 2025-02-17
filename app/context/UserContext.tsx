@@ -23,7 +23,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
             try {
 
                 // Recuperer le token des cookies
-                const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+                const token =localStorage.getItem('authToken');
 
                 if (!token) {
                     console.log("Pas de token trouve");
@@ -32,7 +32,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
                 }
 
                 const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
-                    withCredentials: true, // Assure l'envoi des cookies JWT 
+                    // withCredentials: true, // Assure l'envoi des cookies JWT 
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -41,17 +41,19 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
                 console.log("Reponse API User:", res.data);  //Vérifie ce que le backend retourne
 
                 if (res.data.user) {
-                    setUser({
-                        prenom: res.data.user.prenom,
-                        nom: res.data.user.nom,
-                        role: res.data.user.role,
-                    });
+                    setUser(res.data.user);
+                    // setUser({
+                    //     prenom: res.data.user.prenom,
+                    //     nom: res.data.user.nom,
+                    //     role: res.data.user.role,
+                    // });
                 } else {
                     setUser(null);
                 }
 
             } catch (error) {
                 console.error("Erreur lors de la récupération des informations utilisateur", error);
+                localStorage.removeItem('authToken')//supprimer le token si invalide
                 setUser(null);
             }
         };
