@@ -16,7 +16,7 @@ const Container = styled.header`
 `
 const SideContainer = styled.div`
     height: 50px;
-    width: 18%;
+    width: 18%c;
     padding: 5px 20px;
     background: #1D242E;
     display: flex;

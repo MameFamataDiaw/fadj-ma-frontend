@@ -268,9 +268,9 @@ const AddForm: React.FC = () => {
                             <Button 
                                 type="button" 
                                 onClick={() => {
-                                    if (window.confirm("Êtes-vous sûr de vouloir annuler ?")) {
+                                    // if (window.confirm("Êtes-vous sûr de vouloir annuler ?")) {
                                         router.push('/medicament/list');
-                                    }
+                                    // }
                                 }}
                             >
                                 Annuler
