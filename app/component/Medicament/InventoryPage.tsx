@@ -28,7 +28,7 @@ const Container = styled.main`
     // bottom: 0;
 
     background-color: #EDF1F5;
-    flex: 1
+    flex: 1;
     display: flex;
     // width: 80%;
     margin-left: 250px;

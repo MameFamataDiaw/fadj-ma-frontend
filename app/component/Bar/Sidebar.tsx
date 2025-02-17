@@ -13,7 +13,7 @@ interface MenuItem {
 }
 
 const SidebarContainer = styled.aside`
-    width: 20%;
+    width: 250px;
     height: auto;
     background-color: #283342;
     color: white;
