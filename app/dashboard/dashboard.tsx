@@ -38,7 +38,7 @@ const MainContent = styled.div`
     // }
 `;
 const ContentWrapper = styled.div`
-    padding: 1rem 2rem;
+    // padding: 1rem 2rem;
 `;
 
 const Header = styled.header`
