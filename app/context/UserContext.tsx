@@ -9,6 +9,7 @@ interface User {
 }
 interface UserContextType {
     user: User | null;
+    setUser: (user: User | null) => void;
 }
 
 
@@ -20,23 +21,35 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
+
+                // Recuperer le token des cookies
+                const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+
+                if (!token) {
+                    console.log("Pas de token trouve");
+                    setUser(null);
+                    return;
+                }
+
                 const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
-                withCredentials: true, // Assure l'envoi des cookies JWT 
-            });
-
-            console.log("Réponse API User:", res.data); //Vérifie ce que le backend retourne
-
-            if (res.data.status) { // Assurez-vous que `status: true` est retourné en cas de succès
-                setUser({
-                    prenom: res.data.user.prenom,
-                    nom: res.data.user.nom,
-                    role: res.data.user.role,
+                    withCredentials: true, // Assure l'envoi des cookies JWT 
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
-            } else {
-                setUser(null);
-            }
 
-               // setUser(res.data);
+                console.log("Reponse API User:", res.data);  //Vérifie ce que le backend retourne
+
+                if (res.data.user) {
+                    setUser({
+                        prenom: res.data.user.prenom,
+                        nom: res.data.user.nom,
+                        role: res.data.user.role,
+                    });
+                } else {
+                    setUser(null);
+                }
+
             } catch (error) {
                 console.error("Erreur lors de la récupération des informations utilisateur", error);
                 setUser(null);
@@ -47,7 +60,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user }}>
+        <UserContext.Provider value={{ user, setUser }}>
             {children}
         </UserContext.Provider>
     );

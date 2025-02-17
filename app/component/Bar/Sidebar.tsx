@@ -140,17 +140,18 @@ const menuItems: MenuItem[] = [
     }
 ];
 
-export default function Sidebar() {
+export const Sidebar = () => {
     const router = useRouter();
     const pathname = usePathname();
-    const { user } = useUser();//acceder aux informations de l'utilisateur depuis le contexte
+    const { user, setUser } = useUser();//acceder aux informations de l'utilisateur depuis le contexte
 
     console.log("User dans Sidebar:", user);
 
     const handleLogOut = useCallback(() => {
         document.cookie = 'token=; Max-Age=0; path=/; secure; samesite=strict;';
+        setUser(null);
         router.push('/login');
-    }, [router]);
+    }, [router, setUser]);
 
 
     return (
@@ -166,8 +167,10 @@ export default function Sidebar() {
                     />
                 </ProfileImageWrapper>
                 <ProfileText>
-                    <ProfileName>{user?.prenom || 'Prénom'} {user?.nom || 'Nom'}</ProfileName>
-                    <ProfileRole>{user?.role || 'Rôle'}</ProfileRole>
+                    <ProfileName>
+                        {user ? `${user.prenom} ${user.nom}` : 'Chargement...'}
+                    </ProfileName>
+                    <ProfileRole>{user?.role || 'Chargement...'}</ProfileRole>
                     {/* <ProfileName>Moussa Fall</ProfileName>
                     <ProfileRole>Admin</ProfileRole> */}
                 </ProfileText>
