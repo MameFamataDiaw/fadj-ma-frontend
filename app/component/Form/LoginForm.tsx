@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
-import { setDefaultResultOrder } from 'dns';
+import { useUser } from '@/app/context/UserContext';
 
 interface ButtonProps {
     $primary?: boolean;
@@ -153,6 +153,7 @@ const SubmitButton = styled.button`
 
 const LoginForm = () => {
     const router = useRouter();
+    const { setUser } = useUser(); // Récupérez setUser du contexte
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -171,11 +172,11 @@ const LoginForm = () => {
                 const { token, user } = response.data;
 
                 // stockage du token
-                
+
                 localStorage.setItem("authToken", token);
 
                 // Mise a jour du contexte utilisateur
-                setDefaultResultOrder(user);
+                setUser(user);
 
                 router.push('/');
                 
