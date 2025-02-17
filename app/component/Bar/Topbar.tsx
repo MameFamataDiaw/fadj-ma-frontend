@@ -6,6 +6,9 @@ import { FaLanguage, FaCaretDown, FaBars } from 'react-icons/fa'
 const Container = styled.header`
     display: flex;
     width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
 
      @media (max-width: 480px){
         // width: auto;
