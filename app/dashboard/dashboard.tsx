@@ -12,9 +12,14 @@ const Container = styled.main`
     // width: 80%;
     margin-left: 250px;
     min-height: 100vh;
-    margin-top: 60px;
+    margin-top: 50px;
     padding: 20px;
     background-color: #EDF1F5;
+    // display: flex;
+    // width: 80%;
+    // margin-left: 20%;
+    // height: 100%;
+    // margin-top: 50px;
 
     @media (max-width: 480px){
         width: 100%;
