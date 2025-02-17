@@ -11,6 +11,7 @@ const Container = styled.div`
     padding: 20px 50px;
     max-width: 100%;
     margin: 0;
+    margin-top: 50px;
     background: #EDF1F5;
 `
 const Header = styled.h2`
