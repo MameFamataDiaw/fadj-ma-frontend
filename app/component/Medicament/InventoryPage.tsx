@@ -34,7 +34,7 @@ const Container = styled.main`
     margin-left: 250px;
     min-height: 100vh;
     margin-top: 50px;
-    // padding: 20px;
+    padding: 20px;
 
     @media (max-width: 480px){
         width: 100%;
