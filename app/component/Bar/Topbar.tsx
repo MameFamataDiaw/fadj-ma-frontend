@@ -18,6 +18,7 @@ const SideContainer = styled.div`
     background: #1D242E;
     display: flex;
     align-items: center;
+    left: 0;
 
     @media (max-width: 480px){
         width: 30%;
