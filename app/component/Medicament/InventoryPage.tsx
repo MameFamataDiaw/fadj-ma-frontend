@@ -27,6 +27,7 @@ const Container = styled.div`
     // margin-left: 20%;
     // bottom: 0;
 
+    background-color: #EDF1F5;
     flex: 1
     display: flex;
     // width: 80%;
