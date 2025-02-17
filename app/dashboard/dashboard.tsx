@@ -19,11 +19,11 @@ const Container = styled.main`
     }
 `
 const MainContent = styled.div`
-    flex: 1;
-    background-color: #EDF1F5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    // flex: 1;
+    // background-color: #EDF1F5;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
     // @media (max-width: 768px){
     //     padding-left: 30px;
     //     padding-right: 30px;
