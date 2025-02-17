@@ -26,7 +26,7 @@ export default function Home() {
 
     <div>
           <Topbar />
-          <div style={{ display: 'flex'}}>
+          <div >
               <Sidebar />
               <div>
                   <Dashboard />
