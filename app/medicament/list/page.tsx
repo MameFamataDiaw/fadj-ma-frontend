@@ -6,13 +6,11 @@ import InventoryPage from "@/app/component/Medicament/InventoryPage";
 const ListPage = () => {
     return (
         <div>
-            <div>
-                <Topbar/>
+            <Topbar />
+            <div style={{ display: 'flex'}}>
+                <Sidebar />
                 <div>
-                    <Sidebar/>
-                    <div>
-                        <InventoryPage/>
-                    </div>
+                    <InventoryPage />
                 </div>
             </div>
         </div>
