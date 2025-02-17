@@ -26,7 +26,7 @@ const Container = styled.main`
         margin-left: 0;
     }
 `
-const MainContent = styled.div`
+// const MainContent = styled.div`
     // flex: 1;
     // background-color: #EDF1F5;
     // display: flex;
@@ -36,7 +36,7 @@ const MainContent = styled.div`
     //     padding-left: 30px;
     //     padding-right: 30px;
     // }
-`;
+// `;
 // const ContentWrapper = styled.div`
     // padding: 1rem 2rem;
 // `;
@@ -106,7 +106,7 @@ const Dashboard: React.FC = () => {
     return (
         <Container>
             {/*<Sidebar />*/}
-            <MainContent>
+            {/* <MainContent> */}
                 {/*<Topbar />*/}
                 {/* <ContentWrapper> */}
                     <Header>
@@ -123,7 +123,7 @@ const Dashboard: React.FC = () => {
 
                     <DashboardStats />
                 {/* </ContentWrapper> */}
-            </MainContent>
+            {/* </MainContent> */}
         </Container>
     );
 };
