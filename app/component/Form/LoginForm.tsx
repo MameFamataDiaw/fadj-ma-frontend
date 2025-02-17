@@ -168,7 +168,8 @@ const LoginForm = () => {
 
             console.log('reponse login:', response.data);//pour le debogage
 
-            if (response.data.success) {
+            // if (response.data.success) {
+                if (response.status === 200) {
                 const { token, user } = response.data;
 
                 // stockage du token
@@ -176,18 +177,25 @@ const LoginForm = () => {
                 localStorage.setItem("authToken", token);
 
                 // Mise a jour du contexte utilisateur
-                setUser(user);
+                // setUser(user);
+                setUser({
+                    prenom: user.prenom,
+                    nom: user.nom,
+                    role: user.role
+                });
 
                 router.push('/');
                 
             }  else {
-                setErrorMessage(response.data.message || "Identifiants incorrects. Veuillez réessayer.");
+                // setErrorMessage(response.data.message || "Identifiants incorrects. Veuillez réessayer.");
+                setErrorMessage("Identifiants incorrects. Veuillez réessayer.");
             }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
+        } catch (err) {
                 console.error("Erreur de connexion:", err);
-                setErrorMessage(err.response?.data?.message || "Erreur de connexion. Veuillez vérifier vos identifiants.");
-            }
+                // setErrorMessage(err.response?.data?.message || "Erreur de connexion. Veuillez vérifier vos identifiants.");
+                setErrorMessage("Erreur de connexion. Veuillez vérifier vos identifiants.");
+            }   
     };
 
     const handleRegisterRedirect = () => {
