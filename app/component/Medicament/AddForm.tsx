@@ -205,7 +205,7 @@ const AddForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/api/medicaments', medicament);
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/medicaments`, medicament);
             // alert('Médicament ajouté avec succès !');
             // setMedicament({
             //     nom: '',

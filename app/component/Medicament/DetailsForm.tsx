@@ -132,7 +132,7 @@ const MedicamentDetailsForm: React.FC<{ medicamentId: string }> = ({ medicamentI
     useEffect(() => {
         const fetchGroupes = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/groupes');
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/groupes`);
                 setGroupes(response.data);
             } catch (error) {
                 console.error("Erreur lors de la recuperation des groupes :", error);
