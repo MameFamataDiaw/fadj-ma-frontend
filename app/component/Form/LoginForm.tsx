@@ -163,10 +163,9 @@ const LoginForm = () => {
                 email,
                 password,
             });
-            console.log(process.env.NEXT_PUBLIC_API_URL);
             if (response.status ===  200) {
                 localStorage.setItem("authToken", response.data.token);
-                router.push('/'); // Redirection après connexion
+                router.push('/');
                 
             }  else {
                 setErrorMessage("Identifiants incorrects. Veuillez réessayer.");

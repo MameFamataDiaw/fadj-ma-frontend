@@ -278,7 +278,7 @@ const RegisterForm: React.FC = () => {
             }
         } catch (error) {
             console.error('Erreur lors de l\'inscription', error);
-            alert("Erreur lors de l'inscription. Veuillez réessayer.");
+            // alert("Erreur lors de l'inscription. Veuillez réessayer.");
         }
     };
 

@@ -24,7 +24,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
                 withCredentials: true, // Assure l'envoi des cookies JWT 
             });
 
-            console.log("Réponse API User:", res.data); // 🔍 Vérifie ce que le backend retourne
+            console.log("Réponse API User:", res.data); //Vérifie ce que le backend retourne
 
             if (res.data.status) { // Assurez-vous que `status: true` est retourné en cas de succès
                 setUser({
