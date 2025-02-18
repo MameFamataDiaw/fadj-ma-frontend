@@ -171,8 +171,8 @@ const DashboardMetricCard: React.FC = () => {
                     {/* <FaShieldAlt style={{ color: "#01A768", backgroundColor: "white", padding: "5px", top: "7px" }} /> */}
                     <Image src="/image.png"
                         alt="Profile"
-                        width={24}  
-                        height={30} 
+                        width={23}  
+                        height={29} 
                         style={{ objectFit: 'cover', padding: '5px' }}
                         priority
                     />
@@ -191,8 +191,8 @@ const DashboardMetricCard: React.FC = () => {
                     {/* <FaMoneyBillWave style={{ color: "#FED600", backgroundColor: "white", padding: "5px" }} /> */}
                     <Image src="/Vector.png"
                         alt="Profile"
-                        width={33}
-                        height={24}
+                        width={32}
+                        height={23}
                         style={{ objectFit: 'cover', padding: '5px' }}
                         priority
                     />
@@ -211,8 +211,8 @@ const DashboardMetricCard: React.FC = () => {
                     {/* <FaBriefcaseMedical style={{ color: "#03A9F5", backgroundColor: "white", padding: "5px" }} /> */}
                     <Image src="/Group.png"
                         alt="Profile"
-                        width={30}  // Valeur entière
-                        height={30} // Valeur entière
+                        width={29}  // Valeur entière
+                        height={29} // Valeur entière
                         style={{ objectFit: 'cover', padding: '5px' }}
                         priority
                     />
@@ -231,8 +231,8 @@ const DashboardMetricCard: React.FC = () => {
                     {/* <FaExclamationTriangle style={{ color: "#F0483E", backgroundColor: "white", padding: "5px", }} /> */}
                     <Image src="/Vector (1).png"
                         alt="Profile"
-                        width={33}  // Valeur entière
-                        height={29} // Valeur entière
+                        width={32}  // Valeur entière
+                        height={28} // Valeur entière
                         style={{ objectFit: 'cover', padding: '5px' }}
                         priority
                     />
