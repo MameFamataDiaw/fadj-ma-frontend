@@ -14,6 +14,7 @@ interface MenuItem {
 
 interface SidebarProps {
     isOpen: boolean;
+    toggleSidebar: () => void;
 }
 
 const SidebarContainer = styled.aside<{$isOpen: boolean}>`
@@ -189,7 +190,7 @@ const menuItems: MenuItem[] = [
     }
 ];
 
-export default function Sidebar({ isOpen }: SidebarProps) {
+export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
     const router = useRouter();
     const pathname = usePathname();
     const { user, setUser } = useUser();//acceder aux informations de l'utilisateur depuis le contexte
@@ -264,7 +265,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
             </SidebarContainer>
 
              {/* Overlay pour fermer en cliquant à l'extérieur */}
-             {/* {isSidebarOpen && <Overlay onClick={toggleSidebar} />} */}
+             {isOpen && <Overlay onClick={toggleSidebar} />}
         </>
     );
 };
