@@ -38,6 +38,7 @@ const SidebarContainer = styled.aside<{$isOpen: boolean}>`
         display: block;
         width: 250px;
         height: 100vh;
+        margin-top: 0;
     }
 `;
 
