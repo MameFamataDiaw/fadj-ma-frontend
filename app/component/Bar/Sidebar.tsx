@@ -160,7 +160,6 @@ const FooterContainer = styled.div`
     text-align: center;
     padding: 10px;    
     background-color: #1D242E;
-    margin-bottom:0;
 `
 const Footer = styled.span`
     font-family: 'Poppins', sans-serif;
