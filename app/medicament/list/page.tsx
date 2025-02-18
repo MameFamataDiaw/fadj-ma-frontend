@@ -7,9 +7,7 @@ const ListPage = () => {
     return (
         <div>
             <div>
-                <Topbar/>
                 <div>
-                    <Sidebar/>
                     <div>
                         <InventoryPage/>
                     </div>

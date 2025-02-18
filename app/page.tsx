@@ -25,9 +25,9 @@ export default function Home() {
         // }, []);
 
     <div>
-          <Topbar />
+
           <div> 
-              <Sidebar />
+
               <div>
                   <Dashboard />
                   {/*<InventoryPage />*/}
