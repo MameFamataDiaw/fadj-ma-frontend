@@ -37,6 +37,7 @@ const SidebarContainer = styled.aside<{$isOpen: boolean}>`
     @media (max-width: 912px){
         display: block;
         width: 250px;
+        height: 100vh;
     }
 `;
 
