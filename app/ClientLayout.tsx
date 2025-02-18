@@ -17,7 +17,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     return (
       <>
         <Topbar toggleSidebar={toggleSidebar} />
-        <Sidebar isOpen={isSidebarOpen} />
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <main>{children}</main>
       </>
     );
