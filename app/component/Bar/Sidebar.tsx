@@ -27,16 +27,16 @@ const SidebarContainer = styled.aside<{$isOpen: boolean}>`
     margin-top: 60px;
     padding-top: 30px;
     position: fixed;
-    left: 0;
-    // left: ${({ $isOpen }) => ($isOpen ? "0" : "-250px")};
-    // transition: left 0.3s ease-in-out;
-    // z-index: 1000;
+    // left: 0;
+    left: ${({ $isOpen }) => ($isOpen ? "0" : "-250px")};
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
     top: 0;
     bottom: 0;
      
     @media (max-width: 912px){
         display: block;
-        // width: 250px;
+        width: 250px;
     }
 `;
 
