@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import styled from "styled-components";
-import { FaShieldAlt, FaBriefcaseMedical, FaMoneyBillWave, FaExclamationTriangle, FaChevronDown, FaAngleDoubleRight } from "react-icons/fa";
+import { FaChevronDown, FaAngleDoubleRight } from "react-icons/fa";
 import Image from 'next/image';
 
 // interface CardProps {
@@ -160,7 +160,7 @@ const MetricCardAction = styled.button`
 `;
 
 // const Image = styled.image`
-    
+//     padding: 5px;
 // `
 
 const DashboardMetricCard: React.FC = () => {
@@ -171,9 +171,9 @@ const DashboardMetricCard: React.FC = () => {
                     {/* <FaShieldAlt style={{ color: "#01A768", backgroundColor: "white", padding: "5px", top: "7px" }} /> */}
                     <Image src="/image.png"
                         alt="Profile"
-                        width={24}  // Valeur entière
-                        height={30} // Valeur entière
-                        style={{ objectFit: 'cover' }}
+                        width={24}  
+                        height={30} 
+                        style={{ objectFit: 'cover', padding: '5px' }}
                         priority
                     />
                     <MetricCardTitle>Bien</MetricCardTitle>
@@ -193,7 +193,7 @@ const DashboardMetricCard: React.FC = () => {
                         alt="Profile"
                         width={33}
                         height={24}
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'cover', padding: '5px' }}
                         priority
                     />
                     <MetricCardTitle>4,800,432 FCFA</MetricCardTitle>
@@ -213,7 +213,7 @@ const DashboardMetricCard: React.FC = () => {
                         alt="Profile"
                         width={30}  // Valeur entière
                         height={30} // Valeur entière
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'cover', padding: '5px' }}
                         priority
                     />
                     <MetricCardTitle>298</MetricCardTitle>
@@ -233,7 +233,7 @@ const DashboardMetricCard: React.FC = () => {
                         alt="Profile"
                         width={33}  // Valeur entière
                         height={29} // Valeur entière
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'cover', padding: '5px' }}
                         priority
                     />
                     <MetricCardTitle>1</MetricCardTitle>
