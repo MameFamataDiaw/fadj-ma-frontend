@@ -17,13 +17,14 @@ interface SidebarProps {
     toggleSidebar: () => void;
 }
 
-const SidebarContainer = styled.aside<{$isOpen: boolean}>`
+const SidebarContainer = styled.aside<{ $isOpen: boolean }>`
     width: 20%;
     height: auto;
     background-color: #283342;
     color: white;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     margin-top: 60px;
     padding-top: 30px;
     position: fixed;
@@ -35,11 +36,15 @@ const SidebarContainer = styled.aside<{$isOpen: boolean}>`
     bottom: 0;
      
     @media (max-width: 912px){
-        display: block;
         width: 250px;
-        height: 100vh;
         margin-top: 0;
     }
+`;
+
+const SidebarContent = styled.div`
+    flex-grow: 1; /* Permet au menu d'occuper tout l'espace disponible */
+    display: flex;
+    flex-direction: column;
 `;
 
 const CloseButton = styled.button`
@@ -209,7 +214,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
 
     return (
         <>
-             {isOpen && <Overlay />} {/* Ajoute un fond gris pour masquer le reste */}
+            {isOpen && <Overlay />} {/* Ajoute un fond gris pour masquer le reste */}
             <SidebarContainer $isOpen={isOpen}>
                 {/* <CloseButton onClick={toggleSidebar}>✖</CloseButton> */}
                 <ProfileContainer>
@@ -231,23 +236,25 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
                     <ProfileRole>Admin</ProfileRole> */}
                     </ProfileText>
                 </ProfileContainer>
+                <SidebarContent>
+                    <Menu>
+                        {menuItems.map((item) => (
+                            <MenuLink
+                                key={item.path}
+                                href={item.path}
+                                $isActive={pathname === item.path}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    router.push(item.path);
+                                }}
+                            >
+                                <IconContainer>{item.icon}</IconContainer>
+                                {item.label}
+                            </MenuLink>
+                        ))}
+                    </Menu>
+                </SidebarContent>
 
-                <Menu>
-                    {menuItems.map((item) => (
-                        <MenuLink
-                            key={item.path}
-                            href={item.path}
-                            $isActive={pathname === item.path}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                router.push(item.path);
-                            }}
-                        >
-                            <IconContainer>{item.icon}</IconContainer>
-                            {item.label}
-                        </MenuLink>
-                    ))}
-                </Menu>
 
                 <LogoutButton onClick={handleLogOut}>
                     <IconContainer>
@@ -267,8 +274,8 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
                 </FooterContainer>
             </SidebarContainer>
 
-             {/* Overlay pour fermer en cliquant à l'extérieur */}
-             {isOpen && <Overlay onClick={toggleSidebar} />}
+            {/* Overlay pour fermer en cliquant à l'extérieur */}
+            {isOpen && <Overlay onClick={toggleSidebar} />}
         </>
     );
 };
