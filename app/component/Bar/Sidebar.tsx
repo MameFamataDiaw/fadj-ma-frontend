@@ -35,7 +35,7 @@ const SidebarContainer = styled.aside<{$isOpen: boolean}>`
     bottom: 0;
      
     @media (max-width: 912px){
-        // display: block;
+        display: block;
         width: 250px;
         height: 100vh;
         margin-top: 0;
