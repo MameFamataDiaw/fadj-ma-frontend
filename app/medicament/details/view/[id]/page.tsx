@@ -5,7 +5,6 @@ import DetailsPage from '../../../../component/Medicament/DetailsPage'
 const Details = () => {
     return (
         <div>
-            <Topbar />
             <DetailsPage />
         </div>
     );
