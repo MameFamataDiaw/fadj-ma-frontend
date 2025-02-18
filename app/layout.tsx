@@ -1,30 +1,26 @@
-import type { Metadata } from "next";
-import StyledComponentsRegistry from "@/lib/registry";
-import { UserProvider } from './context/UserContext'
 
-export const metadata: Metadata = {
-  title: "Fadj-ma",
-  description: "Votre pharmacie en ligne",
-    icons: {
-        icon: '/favicon.ico', // Place favicon.ico in the public folder
-    },
-};
+import { metadata } from "./metadata";
+import StyledComponentsRegistry from "@/lib/registry";
+import { UserProvider } from './context/UserContext';
+import ClientLayout from "./ClientLayout";
+
+export { metadata };
 
 export default function RootLayout({
   children,
-}:{
+}: Readonly<{
   children: React.ReactNode;
-}) {
-  return (
-      <html>
-      <body>
-      <UserProvider>
-          <StyledComponentsRegistry>
-              {children}
-          </StyledComponentsRegistry>
-      </UserProvider>
+}>) {
 
+  return (
+    <html>
+      <body>
+        <UserProvider>
+          <StyledComponentsRegistry>
+            <ClientLayout>{children}</ClientLayout>
+          </StyledComponentsRegistry>
+        </UserProvider>
       </body>
-      </html>
+    </html>
   )
 }

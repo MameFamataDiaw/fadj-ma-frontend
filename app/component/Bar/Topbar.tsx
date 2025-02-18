@@ -1,7 +1,13 @@
 'use client'
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components'
-import { FaLanguage, FaCaretDown, FaBars } from 'react-icons/fa'
+import { FaBars } from 'react-icons/fa'
+import { FaChevronDown } from 'react-icons/fa6';
+import Image from 'next/image';
+
+interface TopbarProps {
+    toggleSidebar: () => void;
+}
 
 const Container = styled.header`
     display: flex;
@@ -68,7 +74,7 @@ const TopContainer = styled.div`
 const SearchContainer = styled.div`
     margin: 0 10px;
 
-    @media (max-width: 480px){
+    @media (max-width: 618px){
         display: none;
     }
 `
@@ -176,16 +182,19 @@ const Time = styled.span`
 `;
 
 const MenuIcon = styled(FaBars)`
-    cursor: pointer;
-    align-items: left;
-    margin-left: auto;
-
-  @media (min-width: 481px) {
     display: none;
-  }
+
+    @media (max-width: 913px) {
+        cursor: pointer;
+        display: flex;
+        align-items: right;
+        margin-left: auto;
+
+    }
 `;
 
-export default function Topbar() {
+export default function Topbar({ toggleSidebar }: TopbarProps) {
+
     const [currentDateTime, setCurrentDateTime] = useState<{ date: string; time: string }>({
         date: '14 janvier 2022',
         time: '22:45:04'
@@ -199,9 +208,12 @@ export default function Topbar() {
         });
     }, []);
 
-    setInterval(updateDateTime, 1000);
+    useEffect(() => {
+        const interval = setInterval(updateDateTime, 1000);
+        return () => clearInterval(interval);
+    }, [updateDateTime]);
 
-    return(
+    return (
         <Container>
             <SideContainer>
                 <Logo>
@@ -216,9 +228,16 @@ export default function Topbar() {
                 </SearchContainer>
 
                 <LanguageContainer>
-                    <FaLanguage style={{ marginRight: '5px' }} />
-                        <span>Français (France)</span>
-                    <FaCaretDown style={{ marginRight: '5px' }} />
+                    <Image src="/translate_black_24dp 1.png"
+                        alt="Profile"
+                        width={18}
+                        height={16}
+                        style={{ objectFit: 'cover', marginRight: '5px' }}
+                        priority
+                    />
+                    {/* <FaLanguage style={{ marginRight: '5px' }} /> */}
+                    <span>Français (France) </span>
+                    <FaChevronDown style={{ marginRight: '5px', marginLeft: '5px', fontSize: "10px" }} />
                 </LanguageContainer>
 
                 <WelcomeContainer>
@@ -235,7 +254,10 @@ export default function Topbar() {
                         </DateTime>
                     </DateTimeContainer>
                 </WelcomeContainer>
-                <MenuIcon />
+                <MenuIcon onClick={() => {
+                    console.log("Menu icon clicked");
+                    toggleSidebar();
+                }} />
             </TopContainer>
         </Container>
     );

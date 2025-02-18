@@ -22,7 +22,7 @@ const Container = styled.main`
     // height: 100%;
     // margin-top: 50px;
 
-    @media (max-width: 480px){
+    @media (max-width: 912px){
         width: 100%;
         margin-left: 0;
     }

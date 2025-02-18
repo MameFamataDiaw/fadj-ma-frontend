@@ -26,7 +26,7 @@ export default function Home() {
 
     <div>
           <Topbar />
-          <div >
+          <div> 
               <Sidebar />
               <div>
                   <Dashboard />
