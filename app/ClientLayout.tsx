@@ -16,7 +16,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     };
 
     const pathname = usePathname();
-  const isAuthPage = pathname === '/login' || pathname === '/register';
+    const isAuthPage = pathname === '/login' || pathname === '/register' || pathname === '/medicament';
 
   
     return (
