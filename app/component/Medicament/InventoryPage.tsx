@@ -37,7 +37,7 @@ const Container = styled.main`
     margin-top: 50px;
     padding: 20px;
 
-    @media (max-width: 480px){
+    @media (max-width: 912px){
         width: 100%;
         margin-left: 0;
     }
@@ -254,6 +254,11 @@ const PaginationContainer = styled.div`
         border: 1px;
         border-radius: 100%;
         background: #FFFFFF;
+    }
+
+    select{ 
+        background: none;
+        border: none;
     }
 `
 
