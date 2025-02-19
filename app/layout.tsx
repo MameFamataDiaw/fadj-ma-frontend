@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html>
+    <html lang="en">
       <body>
         <UserProvider>
           <StyledComponentsRegistry>

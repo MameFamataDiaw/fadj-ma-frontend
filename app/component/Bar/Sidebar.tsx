@@ -28,8 +28,7 @@ const SidebarContainer = styled.aside<{ $isOpen: boolean }>`
     margin-top: 60px;
     padding-top: 30px;
     position: fixed;
-    // left: 0;
-    left: ${({ $isOpen }) => ($isOpen ? "0" : "-250px")};
+    left: 0;
     transition: left 0.3s ease-in-out;
     z-index: 1000;
     top: 0;
@@ -37,6 +36,7 @@ const SidebarContainer = styled.aside<{ $isOpen: boolean }>`
      
     @media (max-width: 912px){
         width: 250px;
+        left: ${({ $isOpen }) => ($isOpen ? "0" : "-250px")};
         margin-top: 0;
     }
 `;
@@ -47,16 +47,16 @@ const SidebarContent = styled.div`
     flex-direction: column;
 `;
 
-const CloseButton = styled.button`
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    cursor: pointer;
-`;
+// const CloseButton = styled.button`
+//     background: none;
+//     border: none;
+//     color: white;
+//     font-size: 24px;
+//     position: absolute;
+//     top: 10px;
+//     right: 15px;
+//     cursor: pointer;
+// `;
 
 const Overlay = styled.div`
     position: fixed;
@@ -214,7 +214,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
 
     return (
         <>
-            {isOpen && <Overlay />} {/* Ajoute un fond gris pour masquer le reste */}
+            {/* {isOpen && <Overlay />} Ajoute un fond gris pour masquer le reste */}
             <SidebarContainer $isOpen={isOpen}>
                 {/* <CloseButton onClick={toggleSidebar}>✖</CloseButton> */}
                 <ProfileContainer>
@@ -275,7 +275,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
             </SidebarContainer>
 
             {/* Overlay pour fermer en cliquant à l'extérieur */}
-            {isOpen && <Overlay onClick={toggleSidebar} />}
+            {isOpen && window.innerWidth <= 912 && <Overlay onClick={toggleSidebar} />}
         </>
     );
 };

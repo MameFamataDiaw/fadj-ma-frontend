@@ -270,12 +270,12 @@ const AddIcon = styled(FaPlus)`
 
 const InventoryPage: React.FC = () => {
     const [medicaments, setMedicaments] = useState<Medicament[]>([]);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState(''); //etat qui stock ce que l'utilisateur tape
     const [filteredMedicaments, setFilteredMedicaments] = useState<Medicament[]>([]);
     const [groupFilter, setGroupFilter] = useState('');
     const [totalCount, setTotalCount] = useState(0);
-    const [groupes, setGroupes] =  useState<{_id: string; nomGroupe: string }[]>([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [groupes, setGroupes] = useState<{ _id: string; nomGroupe: string }[]>([]);
+    const [currentPage, setCurrentPage] = useState(1); //etat qui garde la page actuelle
     const itemsPerPage = 5;
     const router = useRouter();
 
@@ -316,10 +316,17 @@ const InventoryPage: React.FC = () => {
         }
     };
 
+    //filtre les medicaments selon la recherche
     const handleSearchAndFilter = () => {
         const searchLower = searchTerm.toLowerCase();
         const filtered = medicaments.filter(med => {
-            const matchSearch = med.nom.toLowerCase().includes(searchLower) || med.idMedicament.toLowerCase().includes(searchLower);
+            // Vérification que med.nom et med.idMedicament existent
+            const nameMatch = med.nom?.toLowerCase().includes(searchLower) || false;
+            const idMatch = med.idMedicament?.toLowerCase().includes(searchLower) || false;
+            const groupMatch = med.groupe?.nomGroupe?.toLowerCase().includes(searchLower) || false;
+            const stockMatch = med.stock?.toString().includes(searchLower) || false;
+        
+            const matchSearch = nameMatch || idMatch || groupMatch || stockMatch;
             const matchGroup = groupFilter ? med.groupe?.nomGroupe === groupFilter : true;
             return matchSearch && matchGroup;
         });
@@ -345,80 +352,91 @@ const InventoryPage: React.FC = () => {
         setCurrentPage((prev) => Math.min(prev + 1, totalPages));
     };
 
-    return(
+    return (
         <Container>
             <MainContent>
-            <HeaderContainer>
-                <HeaderText>
-                    <Header>médicaments ({totalCount})</Header>
-                    <ListText>Liste des médicaments disponibles a la vente</ListText>
-                </HeaderText>
-                <NewMedicLink>
-                    <a href="/medicament"><AddIcon /> Nouveau médicament</a>
-                </NewMedicLink>
-                
-            </HeaderContainer>
+                <HeaderContainer>
+                    <HeaderText>
+                        <Header>médicaments ({totalCount})</Header>
+                        <ListText>Liste des médicaments disponibles a la vente</ListText>
+                    </HeaderText>
+                    <NewMedicLink>
+                        <a href="/medicament"><AddIcon /> Nouveau médicament</a>
+                    </NewMedicLink>
 
-            <SearchContainer>
-                {/* Barre de recherche*/}
-                <SearchInput
-                    type="text"
-                    placeholder="Rechercher dans l'inventaire des médicaments..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    
-                />
-                {/* <FaSearch/> */}
-                {/* Filtre de groupe */}
-                <FilterSelect value={groupFilter} onChange={(e) => setGroupFilter(e.target.value)}>
-                    <option value="">Selectionnez un groupe</option>
-                    {groupes.map((groupe?) => (
-                        <option key={groupe?._id} value={groupe?.nomGroupe}>
-                            {groupe?.nomGroupe}
-                        </option>
-                    ))}
-                </FilterSelect>
-            </SearchContainer>
-            {/* Tableau des médicaments */}
-            <TableContainer>
-            <Table>
-                <thead>
-                <tr>
-                    <TableHeader>Nom du médicament</TableHeader>
-                    <TableHeader>ID du médicament</TableHeader>
-                    <TableHeader>Nom de groupe</TableHeader>
-                    <TableHeader>Stock en quantié</TableHeader>
-                    <TableHeader>Action</TableHeader>
-                </tr>
-                </thead>
-                <tbody>
-                {filteredMedicaments.map((med)  => (
-                    <TableRow key={med._id}>
-                        <TableCell>{med.nom}</TableCell>
-                        <TableCell>{med._id}</TableCell>
-                        <TableCell>{med.groupe?.nomGroupe || 'Groupe non spécifié'}</TableCell>
-                        <TableCell>{med.stock}</TableCell>
-                        <TableCell>
-                            <button onClick={() => handleDetails(med._id)}>Voir tous les détails  <FaAngleDoubleRight style={{ fontSize: "10px", color: "#1D242E" }} /></button>
-                        </TableCell>
-                    </TableRow>
-                ))}
-                </tbody>
-            </Table>
-            </TableContainer>
-            <PaginationContainer>
-                <span>Affichage de {itemsPerPage * (currentPage - 1) + 1} à {Math.min(currentPage * itemsPerPage, filteredMedicaments.length)} résultats sur {filteredMedicaments.length}</span>
-                <div>
-                    <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                        <FaChevronLeft style={{ fontSize: "10px", color: "#1D242E"}} />
-                    </button>
-                    <span>  Page {currentPage} <FaChevronDown style={{ fontSize: "8px", color: "#1D242E"}} />  </span>
-                    {/* <span>Page {currentPage} sur {totalPages}</span> */}
-                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                       <FaChevronRight style={{ fontSize: "10px", color: "#1D242E"}} />
-                    </button>
-                </div>
-            </PaginationContainer>
+                </HeaderContainer>
+
+                <SearchContainer>
+                    {/* Barre de recherche*/}
+                    <SearchInput
+                        type="text"
+                        placeholder="Rechercher dans l'inventaire des médicaments..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+
+                    />
+                    {/* <FaSearch/> */}
+                    {/* Filtre de groupe */}
+                    <FilterSelect value={groupFilter} onChange={(e) => setGroupFilter(e.target.value)}>
+                        <option value="">Selectionnez un groupe</option>
+                        {groupes.map((groupe?) => (
+                            <option key={groupe?._id} value={groupe?.nomGroupe}>
+                                {groupe?.nomGroupe}
+                            </option>
+                        ))}
+                    </FilterSelect>
+                </SearchContainer>
+                {/* Tableau des médicaments */}
+                <TableContainer>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <TableHeader>Nom du médicament</TableHeader>
+                                <TableHeader>ID du médicament</TableHeader>
+                                <TableHeader>Nom de groupe</TableHeader>
+                                <TableHeader>Stock en quantié</TableHeader>
+                                <TableHeader>Action</TableHeader>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {displayedMedicaments.map((med) => (
+                                <TableRow key={med._id}>
+                                    <TableCell>{med.nom}</TableCell>
+                                    <TableCell>{med._id}</TableCell>
+                                    <TableCell>{med.groupe?.nomGroupe || 'Groupe non spécifié'}</TableCell>
+                                    <TableCell>{med.stock}</TableCell>
+                                    <TableCell>
+                                        <button onClick={() => handleDetails(med._id)}>Voir tous les détails  <FaAngleDoubleRight style={{ fontSize: "10px", color: "#1D242E" }} /></button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </tbody>
+                    </Table>
+                </TableContainer>
+                <PaginationContainer>
+                    <span>Affichage de {itemsPerPage * (currentPage - 1) + 1} à {Math.min(currentPage * itemsPerPage, filteredMedicaments.length)} résultats sur {filteredMedicaments.length}</span>
+                    <div>
+                        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+                            <FaChevronLeft style={{ fontSize: "10px", color: "#1D242E" }} />
+                        </button>
+                        {/* <span>  Page {currentPage} <FaChevronDown style={{ fontSize: "8px", color: "#1D242E" }} />  </span> */}
+                        <select 
+                            value={currentPage}
+                            onChange={(e) => setCurrentPage(Number(e.target.value))}
+                            className="page-select"
+                        >
+                            {[...Array(totalPages)].map((_, index) => (
+                                <option key={index + 1} value={index + 1}>
+                                    Page {index + 1}
+                                </option>
+                            ))}
+                        </select>
+                        {/* <span>Page {currentPage} sur {totalPages}</span> */}
+                        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                            <FaChevronRight style={{ fontSize: "10px", color: "#1D242E" }} />
+                        </button>
+                    </div>
+                </PaginationContainer>
             </MainContent>
         </Container>
     );
